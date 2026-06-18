@@ -1,0 +1,10 @@
+{
+  "meta": {
+    "source": "EMPTY PLACEHOLDER - run tools/fetch_usv_corp_e_orar.py to generate real Orar data.",
+    "generatedAt": null,
+    "week1StartDate": "2026-02-23",
+    "roomCount": 0,
+    "eventCount": 0
+  },
+  "rooms": {}
+}

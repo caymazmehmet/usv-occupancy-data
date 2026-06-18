@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "academicYear": "2025-2026",
+    "sourceUrl": "https://usv.ro/academic/calendar-academic/",
+    "fetchedAt": null,
+    "note": "Initial fallback calendar based on USV official academic calendar. Run tools/fetch_usv_academic_calendar.py to refresh automatically."
+  },
+  "teachingPeriods": [
+    { "name": "Semester I - Teaching", "start": "2025-09-29", "end": "2025-12-24" },
+    { "name": "Semester I - Teaching", "start": "2026-01-08", "end": "2026-01-18" },
+    { "name": "Semester II - Teaching", "start": "2026-02-23", "end": "2026-04-12" },
+    { "name": "Semester II - Teaching", "start": "2026-04-20", "end": "2026-06-07" }
+  ],
+  "vacations": [
+    { "name": "Winter vacation", "start": "2025-12-25", "end": "2026-01-07" },
+    { "name": "Intersemester vacation", "start": "2026-02-16", "end": "2026-02-22" },
+    { "name": "Semester II vacation", "start": "2026-04-13", "end": "2026-04-19" }
+  ],
+  "sessions": [
+    { "name": "Winter exam session", "start": "2026-01-19", "end": "2026-02-08" },
+    { "name": "Winter resit session", "start": "2026-02-09", "end": "2026-02-15" },
+    { "name": "Summer exam session", "start": "2026-06-08", "end": "2026-06-28" },
+    { "name": "Summer resit / vacation", "start": "2026-06-29", "end": "2026-07-05" }
+  ],
+  "specialNoClassDays": [
+    { "date": "2025-12-01", "name": "No regular teaching activity" },
+    { "date": "2026-04-10", "name": "No regular teaching activity" },
+    { "date": "2026-05-01", "name": "No regular teaching activity" },
+    { "date": "2026-06-01", "name": "No regular teaching activity" }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "status": "not_initialized",
+  "lastUpdated": null,
+  "message": "Run GitHub Actions workflow once to generate real USV Orar data.",
+  "rooms": 0,
+  "events": 0,
+  "calendar": "initial_fallback",
+  "source": "orar.usv.ro",
+  "version": "v7-auto-pipeline"
+}
