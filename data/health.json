@@ -1,10 +1,13 @@
 {
-  "status": "not_initialized",
-  "lastUpdated": null,
-  "message": "Run GitHub Actions workflow once to generate real USV Orar data.",
-  "rooms": 0,
-  "events": 0,
-  "calendar": "initial_fallback",
-  "source": "orar.usv.ro",
+  "status": "ok",
+  "lastUpdated": "2026-06-18T07:21:07Z",
+  "occupancyGeneratedAt": "2026-06-18T07:21:05",
+  "message": "occupancy updated; calendar updated",
+  "occupancyValidation": "OK rooms=77, events=4073, badTime=0",
+  "calendarValidation": "OK teaching=2, vacations=4, sessions=3",
+  "rooms": 77,
+  "events": 4073,
+  "calendar": "ok",
+  "source": "orar.usv.ro + usv.ro academic calendar",
   "version": "v7-auto-pipeline"
 }
