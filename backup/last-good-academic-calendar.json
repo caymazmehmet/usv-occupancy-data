@@ -1,0 +1,77 @@
+{
+  "meta": {
+    "academicYear": "2025-2026",
+    "sourceUrl": "https://usv.ro/academic/calendar-academic/",
+    "fetchedAt": "2026-06-25T10:23:52",
+    "parser": "usv_page_with_fallback"
+  },
+  "teachingPeriods": [
+    {
+      "name": "Semestrul I",
+      "start": "2025-09-29",
+      "end": "2025-12-24"
+    },
+    {
+      "name": "Semestrul II",
+      "start": "2026-02-23",
+      "end": "2026-04-12"
+    }
+  ],
+  "vacations": [
+    {
+      "name": "Vacanță aferentă semestrului I",
+      "start": "2025-12-25",
+      "end": "2026-01-07"
+    },
+    {
+      "name": "Vacanță intertrimestrială",
+      "start": "2026-02-16",
+      "end": "2026-02-22"
+    },
+    {
+      "name": "Vacanță aferentă semestrului II",
+      "start": "2026-04-13",
+      "end": "2026-04-19"
+    },
+    {
+      "name": "Sesiune restanțe II/vacanță",
+      "start": "2026-06-29",
+      "end": "2026-07-05"
+    }
+  ],
+  "sessions": [
+    {
+      "name": "Sesiune I - iarnă",
+      "start": "2026-01-19",
+      "end": "2026-02-08"
+    },
+    {
+      "name": "Sesiune restanțe I",
+      "start": "2026-02-09",
+      "end": "2026-02-15"
+    },
+    {
+      "name": "Sesiune II - vară",
+      "start": "2026-06-08",
+      "end": "2026-06-28"
+    }
+  ],
+  "specialNoClassDays": [
+    {
+      "date": "2025-12-01",
+      "name": "No regular teaching activity"
+    },
+    {
+      "date": "2026-04-10",
+      "name": "No regular teaching activity"
+    },
+    {
+      "date": "2026-05-01",
+      "name": "No regular teaching activity"
+    },
+    {
+      "date": "2026-06-01",
+      "name": "No regular teaching activity"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>USV Occupancy Data</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f8fafc;color:#0f172a;margin:0;padding:32px;line-height:1.5}
+    .card{max-width:860px;margin:auto;background:white;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 16px 50px rgba(15,23,42,.08)}
+    h1{margin-top:0;color:#003b71}.links a{display:block;margin:8px 0;color:#005c99;font-weight:700}.ok{color:#15803d}.bad{color:#b91c1c}pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;overflow:auto}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>USV Occupancy Data</h1>
+    <p>This repository publishes generated JSON files for the USV Campus Occupancy Portal.</p>
+    <div id="status">Loading health.json...</div>
+    <div class="links">
+      <a href="data/health.json">data/health.json</a>
+      <a href="data/occupancy-corp-e.json">data/occupancy-corp-e.json</a>
+      <a href="data/academic-calendar.json">data/academic-calendar.json</a>
+    </div>
+    <pre id="raw"></pre>
+  </div>
+  <script>
+    fetch('data/health.json?ts=' + Date.now()).then(r=>r.json()).then(h=>{
+      document.getElementById('status').innerHTML = `<b>Status:</b> <span class="${h.status==='ok'?'ok':'bad'}">${h.status}</span><br><b>Last updated:</b> ${h.lastUpdated || '-'}<br><b>Rooms:</b> ${h.rooms}<br><b>Events:</b> ${h.events}`;
+      document.getElementById('raw').textContent = JSON.stringify(h,null,2);
+    }).catch(e=>{document.getElementById('status').textContent='Could not load health.json';});
+  </script>
+</body>
+</html>
