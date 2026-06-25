@@ -142,11 +142,25 @@ def slug(value: Any) -> str:
     return s or "unknown"
 
 
-def fetch(url: str, timeout: int = 12) -> str:
-    r = requests.get(url, timeout=timeout, headers={"User-Agent": UA})
-    r.raise_for_status()
-    r.encoding = r.apparent_encoding or r.encoding
-    return r.text
+def fetch(
+    url: str, timeout: int = 20, retries: int = 4, sleep_seconds: float = 1.5
+) -> str:
+    last_error = None
+
+    for attempt in range(1, retries + 1):
+        try:
+            r = requests.get(url, timeout=timeout, headers={"User-Agent": UA})
+            r.raise_for_status()
+            r.encoding = r.apparent_encoding or r.encoding
+            return r.text
+        except Exception as e:
+            last_error = e
+
+            if attempt < retries:
+                print(f"Retry {attempt}/{retries} for: {url}")
+                time.sleep(sleep_seconds * attempt)
+
+    raise last_error
 
 
 def with_print(url: str) -> str:
@@ -197,14 +211,15 @@ def extract_building(text: str) -> str:
 def make_room_key(building: str, room_code: str, fallback_id: str = "") -> str:
     b = slug(building)
     c = key(room_code)
+
     if b == "unknown" and fallback_id:
         return f"unknown{fallback_id}__{c}"
+
     return f"{b}__{c}"
 
 
 def extract_room_code(text: str) -> str:
     raw = tr(clean(text)).upper()
-
     raw = re.sub(r"\bCORP(?:UL)?\s*[:\-]?\s*[A-Z0-9]{1,4}\s*[-:]*\s*", " ", raw)
 
     m = re.search(r"\bAULA\s+([A-Z0-9]+)\b", raw)
@@ -489,6 +504,53 @@ def start_hour_for_row(
     return None
 
 
+def is_event_fragment(text: str) -> bool:
+    t = clean(text)
+    n = norm(t)
+
+    if not t:
+        return True
+
+    if n.startswith("sapt") or n.startswith("saptamanile") or n.startswith("primele"):
+        return True
+
+    if re.match(r"^sgr\.?\s*[0-9a-z]+(?:\s+sapt.*)?$", n, re.IGNORECASE):
+        return True
+
+    if re.match(r"^grupa\s*[0-9a-z]+(?:\s+sapt.*)?$", n, re.IGNORECASE):
+        return True
+
+    if re.match(r"^subgrupa\s*[0-9a-z]+(?:\s+sapt.*)?$", n, re.IGNORECASE):
+        return True
+
+    group_only_patterns = [
+        r"^\d{3,4}[a-zA-Z]?\s*\([^)]+an\s+\d+[^)]*\)$",
+        r"^\([^)]+an\s+\d+[^)]*\)$",
+        r"^[A-Z0-9_\/\-]{2,}\s+anul?\s+\d+$",
+    ]
+
+    for pattern in group_only_patterns:
+        if re.search(pattern, t, re.IGNORECASE) or re.search(pattern, n, re.IGNORECASE):
+            return True
+
+    chunks = [clean(x) for x in t.split(",")]
+
+    if len(chunks) >= 2:
+        typ = norm(chunks[1])
+        if typ in {"curs", "sem", "seminar", "lab", "laborator", "proiect", "lp"}:
+            return False
+
+    if len(chunks) >= 3:
+        first = norm(chunks[0])
+        second = norm(chunks[1])
+        third = norm(chunks[2])
+
+        if first and (second or third):
+            return False
+
+    return False
+
+
 def split_events(raw: str) -> List[str]:
     raw = raw.replace("\r", "\n")
     raw = re.sub(r"\*+", "\n", raw)
@@ -503,7 +565,6 @@ def split_events(raw: str) -> List[str]:
 
         for sub in re.split(r"\s*\.\.\.\s*|\s*\.\.\s*", line):
             sub = clean(sub.strip(" .;-"))
-
             if sub:
                 parts.append(sub)
 
@@ -514,15 +575,23 @@ def weeks_from_text(text: str) -> Optional[List[int]]:
     tx = norm(text)
 
     m = re.search(r"primele\s+(\d+)\s+sapt", tx)
-
     if m:
         n = int(m.group(1))
         return list(range(1, n + 1))
 
     weeks: List[int] = []
 
+    tx = tx.replace(" si ", " ")
+    tx = tx.replace(" și ", " ")
+    tx = tx.replace("+", " ")
+    tx = tx.replace("hsapt", " sapt ")
+
     for m in re.finditer(r"sapt(?:amana|amani|\.)?\s*([0-9,\-\s]+)", tx):
-        for part in re.split(r"[,\s]+", m.group(1)):
+        raw_nums = m.group(1)
+
+        for part in re.split(r"[,\s]+", raw_nums):
+            part = part.strip()
+
             if not part:
                 continue
 
@@ -550,6 +619,8 @@ def extract_group_from_text(text: str) -> str:
 
     patterns = [
         r"\bgrupa\s*[0-9a-zA-Z]+",
+        r"\bsgr\.?\s*[0-9a-zA-Z]+",
+        r"\bsubgrupa\s*[0-9a-zA-Z]+",
         r"\b\d{3,4}[a-zA-Z]?\s*\([^)]+an\s+\d+[^)]*\)",
         r"\([A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_,.\-\/\s]+an\s+\d+[^)]*\)",
         r"\b[A-Z0-9_\/\-]{2,}\s+anul?\s+\d+\b",
@@ -571,7 +642,21 @@ def parse_course(text: str) -> Dict[str, Any]:
     txt = clean(text)
     chunks = [clean(x) for x in txt.split(",")]
 
-    group = ", ".join(chunks[3:]) if len(chunks) > 3 else ""
+    group_parts: List[str] = []
+
+    if len(chunks) > 3:
+        for x in chunks[3:]:
+            nx = norm(x)
+
+            if not nx:
+                continue
+
+            if nx.startswith("sapt") or nx.startswith("primele"):
+                continue
+
+            group_parts.append(clean(x))
+
+    group = ", ".join(group_parts)
 
     if is_blank_group(group):
         group = extract_group_from_text(txt)
@@ -590,6 +675,28 @@ def parse_course(text: str) -> Dict[str, Any]:
         event["weeks"] = w
 
     return event
+
+
+def attach_fragment_to_event(event: Dict[str, Any], fragment: str) -> None:
+    fragment = clean(fragment)
+
+    if not fragment:
+        return
+
+    old_raw = clean(event.get("raw", ""))
+    event["raw"] = clean((old_raw + ", " + fragment).strip(" ,"))
+
+    if is_blank_group(event.get("group")):
+        group = extract_group_from_text(fragment)
+
+        if group:
+            event["group"] = group
+
+    weeks = weeks_from_text(fragment)
+
+    if weeks:
+        old_weeks = event.get("weeks") if isinstance(event.get("weeks"), list) else []
+        event["weeks"] = sorted(set(old_weeks + weeks))
 
 
 def parse_regular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
@@ -633,7 +740,17 @@ def parse_regular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
         start = f"{sh:02d}:00"
         end = f"{min(23, sh + duration):02d}:00"
 
+        cell_events: List[Dict[str, Any]] = []
+        pending_fragments: List[str] = []
+
         for part in split_events(raw):
+            if is_event_fragment(part):
+                if cell_events:
+                    attach_fragment_to_event(cell_events[-1], part)
+                else:
+                    pending_fragments.append(part)
+                continue
+
             ev = parse_course(part)
 
             ev.update(
@@ -646,6 +763,11 @@ def parse_regular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
                 }
             )
 
+            for frag in pending_fragments:
+                attach_fragment_to_event(ev, frag)
+            pending_fragments = []
+
+            cell_events.append(ev)
             events.append(ev)
 
     return events
@@ -673,7 +795,6 @@ def parse_ro_date(text: str, y1: int, y2: int) -> Optional[str]:
 
     d = int(m.group(1))
     mon = norm(m.group(2))
-
     month = MONTHS.get(mon[:3]) or MONTHS.get(mon)
 
     if not month:
@@ -742,11 +863,13 @@ def parse_modular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
 
                 if day_idx == 7:
                     day_idx = 0
+
             raw_line = clean(" | ".join(cells))
             group = cells[6] if len(cells) > 6 else ""
 
             if is_blank_group(group):
                 group = extract_group_from_text(raw_line)
+
             ev = {
                 "roomCode": room_code,
                 "date": ev_date,
@@ -822,7 +945,9 @@ def scrape_room(room: Dict[str, str]) -> Dict[str, Any]:
     soup = BeautifulSoup(html, "html.parser")
 
     parsed_info = page_room_info(
-        soup, rid=int(room.get("id", "0") or 0), fallback_label=base["label"]
+        soup,
+        rid=int(room.get("id", "0") or 0),
+        fallback_label=base["label"],
     )
 
     if parsed_info:
@@ -830,7 +955,9 @@ def scrape_room(room: Dict[str, str]) -> Dict[str, Any]:
         building_key = parsed_info.get("buildingKey") or slug(building)
         code = parsed_info.get("roomCode") or code
         room_key = parsed_info.get("roomKey") or make_room_key(
-            building, code, room.get("id", "")
+            building,
+            code,
+            room.get("id", ""),
         )
 
     events = parse_regular(code, soup) + parse_modular(code, soup)
@@ -929,7 +1056,7 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--output", default=str(OUTPUT))
     ap.add_argument("--scan-min", type=int, default=1)
-    ap.add_argument("--scan-max", type=int, default=5000)
+    ap.add_argument("--scan-max", type=int, default=1000)
     ap.add_argument("--workers", type=int, default=16)
     ap.add_argument("--week1-start-date", default=WEEK1_START)
     ap.add_argument("--limit", type=int, default=0, help="For quick test only")
