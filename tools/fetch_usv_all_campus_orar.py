@@ -155,6 +155,7 @@ def with_print(url: str) -> str:
     q["print"] = "da"
     return urlunparse(p._replace(query=urlencode(q)))
 
+
 def canonical_building(value: Any) -> str:
     raw = clean(value)
     n = norm(raw)
@@ -187,6 +188,7 @@ def canonical_building(value: Any) -> str:
             return label
 
     return "Unknown"
+
 
 def extract_building(text: str) -> str:
     return canonical_building(text)
@@ -537,15 +539,48 @@ def weeks_from_text(text: str) -> Optional[List[int]]:
     return w or None
 
 
+def is_blank_group(value: Any) -> bool:
+    v = clean(value)
+    return not v or v in {"-", ".", "—", "–"}
+
+
+def extract_group_from_text(text: str) -> str:
+    txt = clean(text)
+    n = norm(txt)
+
+    patterns = [
+        r"\bgrupa\s*[0-9a-zA-Z]+",
+        r"\b\d{3,4}[a-zA-Z]?\s*\([^)]+an\s+\d+[^)]*\)",
+        r"\([A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_,.\-\/\s]+an\s+\d+[^)]*\)",
+        r"\b[A-Z0-9_\/\-]{2,}\s+anul?\s+\d+\b",
+    ]
+
+    for pattern in patterns:
+        m = re.search(pattern, txt, re.IGNORECASE)
+        if m:
+            return clean(m.group(0))
+
+    m = re.search(r"\b[a-z0-9_\/\-]{2,}\s+anul?\s+\d+\b", n, re.IGNORECASE)
+    if m:
+        return clean(m.group(0))
+
+    return ""
+
+
 def parse_course(text: str) -> Dict[str, Any]:
     txt = clean(text)
     chunks = [clean(x) for x in txt.split(",")]
+
+    group = ", ".join(chunks[3:]) if len(chunks) > 3 else ""
+
+    if is_blank_group(group):
+        group = extract_group_from_text(txt)
 
     event = {
         "subject": chunks[0] if chunks else txt,
         "type": chunks[1] if len(chunks) > 1 else "",
         "teacher": chunks[2] if len(chunks) > 2 else "",
-        "group": ", ".join(chunks[3:]) if len(chunks) > 3 else "",
+        "group": group,
         "raw": txt,
     }
 
@@ -707,7 +742,11 @@ def parse_modular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
 
                 if day_idx == 7:
                     day_idx = 0
+            raw_line = clean(" | ".join(cells))
+            group = cells[6] if len(cells) > 6 else ""
 
+            if is_blank_group(group):
+                group = extract_group_from_text(raw_line)
             ev = {
                 "roomCode": room_code,
                 "date": ev_date,
@@ -717,8 +756,8 @@ def parse_modular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
                 "subject": subject,
                 "type": typ,
                 "teacher": teacher,
-                "group": cells[6] if len(cells) > 6 else "",
-                "raw": clean(" | ".join(cells)),
+                "group": group,
+                "raw": raw_line,
                 "source": "modular",
             }
 
