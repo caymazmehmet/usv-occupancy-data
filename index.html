@@ -1,15 +1,60 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>USV Occupancy Data</title>
   <style>
-    body{font-family:Arial,sans-serif;background:#f8fafc;color:#0f172a;margin:0;padding:32px;line-height:1.5}
-    .card{max-width:860px;margin:auto;background:white;border:1px solid #e2e8f0;border-radius:18px;padding:24px;box-shadow:0 16px 50px rgba(15,23,42,.08)}
-    h1{margin-top:0;color:#003b71}.links a{display:block;margin:8px 0;color:#005c99;font-weight:700}.ok{color:#15803d}.bad{color:#b91c1c}pre{background:#0f172a;color:#e2e8f0;padding:16px;border-radius:12px;overflow:auto}
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      margin: 0;
+      padding: 32px;
+      line-height: 1.5
+    }
+
+    .card {
+      max-width: 860px;
+      margin: auto;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 16px 50px rgba(15, 23, 42, .08)
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #003b71
+    }
+
+    .links a {
+      display: block;
+      margin: 8px 0;
+      color: #005c99;
+      font-weight: 700
+    }
+
+    .ok {
+      color: #15803d
+    }
+
+    .bad {
+      color: #b91c1c
+    }
+
+    pre {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 16px;
+      border-radius: 12px;
+      overflow: auto
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h1>USV Occupancy Data</h1>
@@ -18,15 +63,38 @@
     <div class="links">
       <a href="data/health.json">data/health.json</a>
       <a href="data/occupancy-corp-e.json">data/occupancy-corp-e.json</a>
+      <a href="data/occupancy-all-campus.json">data/occupancy-all-campus.json</a>
       <a href="data/academic-calendar.json">data/academic-calendar.json</a>
     </div>
     <pre id="raw"></pre>
   </div>
   <script>
-    fetch('data/health.json?ts=' + Date.now()).then(r=>r.json()).then(h=>{
-      document.getElementById('status').innerHTML = `<b>Status:</b> <span class="${h.status==='ok'?'ok':'bad'}">${h.status}</span><br><b>Last updated:</b> ${h.lastUpdated || '-'}<br><b>Rooms:</b> ${h.rooms}<br><b>Events:</b> ${h.events}`;
-      document.getElementById('raw').textContent = JSON.stringify(h,null,2);
-    }).catch(e=>{document.getElementById('status').textContent='Could not load health.json';});
+    Promise.all([
+      fetch('data/health.json?ts=' + Date.now()).then(r => r.json()),
+      fetch('data/occupancy-all-campus.json?ts=' + Date.now()).then(r => r.json())
+    ]).then(([h, all]) => {
+      const meta = all.meta || {};
+
+      document.getElementById('status').innerHTML =
+        `<b>Status:</b> <span class="${h.status === 'ok' ? 'ok' : 'bad'}">${h.status}</span><br>` +
+        `<b>Corp E rooms:</b> ${h.rooms || '-'}<br>` +
+        `<b>Corp E events:</b> ${h.events || '-'}<br><br>` +
+        `<b>All-campus buildings:</b> ${meta.buildingCount || '-'}<br>` +
+        `<b>All-campus rooms:</b> ${meta.roomCount || '-'}<br>` +
+        `<b>All-campus events:</b> ${meta.eventCount || '-'}<br>` +
+        `<b>Bad time:</b> ${meta.badTime ?? '-'}<br>` +
+        `<b>Modular date null:</b> ${meta.modularDateNull ?? '-'}<br>` +
+        `<b>Last updated:</b> ${meta.generatedAt || h.lastUpdated || '-'}`;
+
+      document.getElementById('raw').textContent = JSON.stringify({
+        health: h,
+        allCampusMeta: meta
+      }, null, 2);
+    }).catch(e => {
+      document.getElementById('status').textContent = 'Could not load JSON files';
+      document.getElementById('raw').textContent = String(e);
+    });
   </script>
 </body>
+
 </html>
