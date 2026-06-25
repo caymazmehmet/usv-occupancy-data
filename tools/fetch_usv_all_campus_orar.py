@@ -1106,6 +1106,11 @@ def build_result(
         events = room.get("events", [])
 
         for e in events:
+            # Keep JSON/frontend clean: if Orar does not provide a group, write "-" instead of empty string.
+            # Real group values are preserved; only blank/missing group fields are normalized.
+            if is_blank_group(e.get("group")):
+                e["group"] = "-"
+
             if not e.get("start") or not e.get("end"):
                 bad_time += 1
 
