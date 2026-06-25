@@ -614,57 +614,135 @@ def is_blank_group(value: Any) -> bool:
 
 
 def extract_group_from_text(text: str) -> str:
+    """
+    Extracts group/program information from Orar text.
+
+    Handles examples like:
+      - grupa2b(FEAA,MNG an 1), sgr.4
+      - AI an 3(FEAA)
+      - C an 3(FIESC)
+      - Ist. an 2(FIG)
+      - G (ID) anul 1
+      - modular raw rows separated by pipes, where group is often last column
+    """
     txt = clean(text)
-    n = norm(txt)
+
+    if not txt:
+        return ""
+
+    # For modular table rows, the group is usually in the last non-empty column:
+    # 2 | Sâmbătă (...) | 08 - 12 | Course | sem | Teacher | | G (ID) anul 1
+    if "|" in txt:
+        pipe_parts = [clean(x) for x in txt.split("|")]
+
+        for part in reversed(pipe_parts):
+            if not part:
+                continue
+
+            if re.search(
+                r"\b[A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_.\/\-]{1,}"
+                r"(?:\s*\([^)]+\))?\s+an(?:ul)?\s+\d+\b",
+                part,
+                re.IGNORECASE,
+            ):
+                return part
+
+            if re.search(
+                r"\bgrupa\s*[0-9a-zA-Z]+|\bsgr\.?\s*[0-9a-zA-Z]+|\bsubgrupa\s*[0-9a-zA-Z]+",
+                part,
+                re.IGNORECASE,
+            ):
+                return part
 
     patterns = [
-        r"\bgrupa\s*[0-9a-zA-Z]+",
+        # grupa2b(FEAA,MNG an 1), grupa 2, grupa2b
+        r"\bgrupa\s*[0-9a-zA-Z]+(?:\s*\([^)]+\))?",
+
+        # sgr.4, sgr 4
         r"\bsgr\.?\s*[0-9a-zA-Z]+",
+
+        # subgrupa 1
         r"\bsubgrupa\s*[0-9a-zA-Z]+",
-        r"\b\d{3,4}[a-zA-Z]?\s*\([^)]+an\s+\d+[^)]*\)",
-        r"\([A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_,.\-\/\s]+an\s+\d+[^)]*\)",
-        r"\b[A-Z0-9_\/\-]{2,}\s+anul?\s+\d+\b",
+
+        # G (ID) anul 1, G (ID) an 1
+        r"\b[A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_.\/\-]{1,}\s*\([^)]+\)\s+an(?:ul)?\s+\d+\b",
+
+        # C an 3(FIESC), G an 2(FIG), Ist. an 2(FIG), AI an 3(FEAA)
+        r"\b[A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_.\/\-]{1,}\s+an(?:ul)?\s+\d+\s*\([^)]+\)",
+
+        # C an 3, G an 2, Ist. an 2, MNG an 1
+        r"\b[A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_.\/\-]{1,}\s+an(?:ul)?\s+\d+\b",
+
+        # 1234A(... an 1 ...)
+        r"\b\d{3,4}[a-zA-Z]?\s*\([^)]+an(?:ul)?\s+\d+[^)]*\)",
+
+        # (... an 1 ...)
+        r"\([A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_,.\-\/\s]+an(?:ul)?\s+\d+[^)]*\)",
     ]
 
     for pattern in patterns:
         m = re.search(pattern, txt, re.IGNORECASE)
+
         if m:
             return clean(m.group(0))
 
-    m = re.search(r"\b[a-z0-9_\/\-]{2,}\s+anul?\s+\d+\b", n, re.IGNORECASE)
-    if m:
-        return clean(m.group(0))
+    # Fallback on normalized text for diacritics-insensitive matching.
+    n = norm(txt)
+
+    fallback_patterns = [
+        r"\b[a-z0-9_.\/\-]{1,}\s*\([^)]+\)\s+an(?:ul)?\s+\d+\b",
+        r"\b[a-z0-9_.\/\-]{1,}\s+an(?:ul)?\s+\d+\s*\([^)]+\)",
+        r"\b[a-z0-9_.\/\-]{1,}\s+an(?:ul)?\s+\d+\b",
+    ]
+
+    for pattern in fallback_patterns:
+        m = re.search(pattern, n, re.IGNORECASE)
+
+        if m:
+            return clean(m.group(0))
 
     return ""
-
 
 def parse_course(text: str) -> Dict[str, Any]:
     txt = clean(text)
     chunks = [clean(x) for x in txt.split(",")]
 
-    group_parts: List[str] = []
+    course_types = {"curs", "sem", "seminar", "lab", "laborator", "proiect", "lp"}
 
-    if len(chunks) > 3:
-        for x in chunks[3:]:
-            nx = norm(x)
+    subject = chunks[0] if chunks else txt
+    typ = ""
+    teacher = ""
+    group = ""
 
-            if not nx:
-                continue
+    if len(chunks) >= 2 and norm(chunks[1]) in course_types:
+        typ = chunks[1]
+        teacher = chunks[2] if len(chunks) > 2 else ""
 
-            if nx.startswith("sapt") or nx.startswith("primele"):
-                continue
+        group_parts: List[str] = []
 
-            group_parts.append(clean(x))
+        if len(chunks) > 3:
+            for x in chunks[3:]:
+                nx = norm(x)
 
-    group = ", ".join(group_parts)
+                if not nx:
+                    continue
 
+                if nx.startswith("sapt") or nx.startswith("primele") or nx.startswith("saptamanile"):
+                    continue
+
+                group_parts.append(clean(x))
+
+        group = ", ".join(group_parts)
+
+    # If group is still empty, extract it from the full raw text.
+    # This catches short/group-only rows and rows with commas inside parentheses.
     if is_blank_group(group):
         group = extract_group_from_text(txt)
 
     event = {
-        "subject": chunks[0] if chunks else txt,
-        "type": chunks[1] if len(chunks) > 1 else "",
-        "teacher": chunks[2] if len(chunks) > 2 else "",
+        "subject": subject,
+        "type": typ,
+        "teacher": teacher,
         "group": group,
         "raw": txt,
     }
@@ -675,7 +753,6 @@ def parse_course(text: str) -> Dict[str, Any]:
         event["weeks"] = w
 
     return event
-
 
 def attach_fragment_to_event(event: Dict[str, Any], fragment: str) -> None:
     fragment = clean(fragment)
@@ -865,7 +942,20 @@ def parse_modular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
                     day_idx = 0
 
             raw_line = clean(" | ".join(cells))
-            group = cells[6] if len(cells) > 6 else ""
+
+            # Group is sometimes cells[6], but in many Orar modular rows
+            # cells[6] is empty and the real group is cells[7] or later.
+            group = ""
+
+            for extra_cell in cells[6:]:
+                candidate = clean(extra_cell)
+
+                if not candidate:
+                    continue
+
+                extracted = extract_group_from_text(candidate)
+                group = extracted or candidate
+                break
 
             if is_blank_group(group):
                 group = extract_group_from_text(raw_line)
@@ -892,7 +982,6 @@ def parse_modular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
             events.append(ev)
 
     return events
-
 
 def dedupe_events(events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     seen = set()
