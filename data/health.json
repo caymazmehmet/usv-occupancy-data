@@ -1,12 +1,12 @@
 {
   "status": "ok",
-  "lastUpdated": "2026-06-26T11:52:50Z",
-  "occupancyGeneratedAt": "2026-06-26T11:52:47",
+  "lastUpdated": "2026-06-26T17:13:32Z",
+  "occupancyGeneratedAt": "2026-06-26T17:13:30",
   "message": "occupancy updated; calendar updated",
-  "occupancyValidation": "OK rooms=77, events=4073, badTime=0",
+  "occupancyValidation": "OK rooms=77, events=3977, badTime=0",
   "calendarValidation": "OK teaching=2, vacations=4, sessions=3",
   "rooms": 77,
-  "events": 4073,
+  "events": 3977,
   "calendar": "ok",
   "source": "orar.usv.ro + usv.ro academic calendar",
   "version": "v7-auto-pipeline"
