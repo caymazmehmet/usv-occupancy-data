@@ -1,7 +1,7 @@
 {
   "status": "ok",
-  "lastUpdated": "2026-06-26T22:37:47Z",
-  "occupancyGeneratedAt": "2026-06-26T22:37:44",
+  "lastUpdated": "2026-06-27T06:38:25Z",
+  "occupancyGeneratedAt": "2026-06-27T06:38:23",
   "message": "occupancy updated; calendar updated",
   "occupancyValidation": "OK rooms=77, events=4073, badTime=0",
   "calendarValidation": "OK teaching=2, vacations=4, sessions=3",
