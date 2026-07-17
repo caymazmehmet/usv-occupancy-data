@@ -1,9 +1,9 @@
 {
-  "status": "ok",
-  "lastUpdated": "2026-07-16T22:16:00Z",
+  "status": "degraded",
+  "lastUpdated": "2026-07-17T05:50:53Z",
   "occupancyGeneratedAt": "2026-07-16T22:15:57",
-  "message": "occupancy updated; calendar updated",
-  "occupancyValidation": "OK rooms=77, events=4073, badTime=0",
+  "message": "occupancy rejected; using last-good if available; calendar updated",
+  "occupancyValidation": "missing file: /home/runner/work/usv-occupancy-data/usv-occupancy-data/data/_tmp_occupancy-corp-e-20260717-055036.json",
   "calendarValidation": "OK teaching=2, vacations=4, sessions=3",
   "rooms": 77,
   "events": 4073,
