@@ -3,13 +3,8 @@ name: Update USV Orar Data
 on:
   workflow_dispatch:
   schedule:
-    - cron: "17 0 * * *"
-      timezone: "Europe/Bucharest"
-    - cron: "17 6 * * *"
-      timezone: "Europe/Bucharest"
-    - cron: "17 12 * * *"
-      timezone: "Europe/Bucharest"
-    - cron: "17 18 * * *"
+    # Sadece her gece 01:00'da çalışır (Sunucuları yormaz)
+    - cron: "0 1 * * *"
       timezone: "Europe/Bucharest"
 
 permissions:
@@ -39,8 +34,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Update Orar and academic calendar data
+        # DİKKAT: Senin 50 limitini eklediğin doğru dosyayı çalıştırıyoruz
         run: |
-          python tools/update_occupancy_all.py --scan-max 850 --workers 16
+          python fetch_usv_all_campus_orar.py
 
       - name: Commit JSON updates
         run: |
