@@ -41,8 +41,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
-          git reset --soft origin/main || true
           git add data/*.json backup/last-good-*.json || true
-          git diff --cached --quiet && echo "No changes" || git commit -m "Update USV occupancy data [skip ci]"
-          git pull origin main --rebase || true
-          git push origin main
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update USV occupancy data [skip ci]"
+            git pull origin main --rebase
+            git push origin main
+          fi
