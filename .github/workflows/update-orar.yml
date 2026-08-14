@@ -3,7 +3,6 @@ name: Update USV Orar Data
 on:
   workflow_dispatch:
   schedule:
-    # Sadece her gece 01:00'da çalışır (Sunucuları yormaz)
     - cron: "0 1 * * *"
       timezone: "Europe/Bucharest"
 
@@ -31,12 +30,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install requests beautifulsoup4
 
       - name: Update Orar and academic calendar data
-        # DİKKAT: Senin 50 limitini eklediğin doğru dosyayı çalıştırıyoruz
         run: |
-          python fetch_usv_all_campus_orar.py --group-stop-after-empty 50
+          python scraper_bot/fetch_usv_all_campus_orar.py --group-stop-after-empty 50
 
       - name: Commit JSON updates
         run: |
