@@ -36,7 +36,7 @@ jobs:
       - name: Update Orar and academic calendar data
         # DİKKAT: Senin 50 limitini eklediğin doğru dosyayı çalıştırıyoruz
         run: |
-          python fetch_usv_all_campus_orar.py
+          python fetch_usv_all_campus_orar.py --group-stop-after-empty 50
 
       - name: Commit JSON updates
         run: |
