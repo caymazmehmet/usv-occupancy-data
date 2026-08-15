@@ -30,22 +30,20 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
+          pip install -r requirements.txt
 
       - name: Update Orar and academic calendar data
         run: |
-          python scraper_bot/fetch_usv_all_campus_orar.py --group-stop-after-empty 50
+          # Dikkat: GitHub'da var olan "tools" klasöründeki dosyayı ve 50 limitini kullanıyoruz!
+          python tools/update_occupancy_all.py --scan-max 850 --workers 16 --group-stop-after-empty 50
 
       - name: Commit and push JSON updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
-          git rebase origin/main
+          git reset --soft origin/main || true
           git add data/*.json backup/last-good-*.json || true
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update USV occupancy data [skip ci]"
-            git push origin main
-          fi
+          git diff --cached --quiet && echo "No changes" || git commit -m "Update USV occupancy data [skip ci]"
+          git pull origin main --rebase || true
+          git push origin main
