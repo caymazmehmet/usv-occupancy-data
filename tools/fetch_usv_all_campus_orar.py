@@ -31,6 +31,7 @@ from bs4 import BeautifulSoup, Tag
 
 INDEX_URL = "https://orar.usv.ro/orar/vizualizare/orarUp1.php"
 ROOM_URL = "https://orar.usv.ro/orar/vizualizare/orarSPG.php?ID={id}&back=&mod=sala&mod2=vizual&print=da"
+MOBILE_GROUP_URL = "https://orar.usv.ro/orar/mobil/vizualizare/orarSPG.php?ID={id}&back=&mod=grupa&mod2=vizual&print=da"
 
 OUTPUT = Path("data/occupancy-all-campus.json")
 WEEK1_START = "2026-02-23"
@@ -657,25 +658,18 @@ def extract_group_from_text(text: str) -> str:
     patterns = [
         # grupa2b(FEAA,MNG an 1), grupa 2, grupa2b
         r"\bgrupa\s*[0-9a-zA-Z]+(?:\s*\([^)]+\))?",
-
         # sgr.4, sgr 4
         r"\bsgr\.?\s*[0-9a-zA-Z]+",
-
         # subgrupa 1
         r"\bsubgrupa\s*[0-9a-zA-Z]+",
-
         # G (ID) anul 1, G (ID) an 1
         r"\b[A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_.\/\-]{1,}\s*\([^)]+\)\s+an(?:ul)?\s+\d+\b",
-
         # C an 3(FIESC), G an 2(FIG), Ist. an 2(FIG), AI an 3(FEAA)
         r"\b[A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_.\/\-]{1,}\s+an(?:ul)?\s+\d+\s*\([^)]+\)",
-
         # C an 3, G an 2, Ist. an 2, MNG an 1
         r"\b[A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_.\/\-]{1,}\s+an(?:ul)?\s+\d+\b",
-
         # 1234A(... an 1 ...)
         r"\b\d{3,4}[a-zA-Z]?\s*\([^)]+an(?:ul)?\s+\d+[^)]*\)",
-
         # (... an 1 ...)
         r"\([A-Za-zĂÂÎȘŞȚŢăâîșşțţ0-9_,.\-\/\s]+an(?:ul)?\s+\d+[^)]*\)",
     ]
@@ -703,6 +697,7 @@ def extract_group_from_text(text: str) -> str:
 
     return ""
 
+
 def parse_course(text: str) -> Dict[str, Any]:
     txt = clean(text)
     chunks = [clean(x) for x in txt.split(",")]
@@ -727,7 +722,11 @@ def parse_course(text: str) -> Dict[str, Any]:
                 if not nx:
                     continue
 
-                if nx.startswith("sapt") or nx.startswith("primele") or nx.startswith("saptamanile"):
+                if (
+                    nx.startswith("sapt")
+                    or nx.startswith("primele")
+                    or nx.startswith("saptamanile")
+                ):
                     continue
 
                 group_parts.append(clean(x))
@@ -753,6 +752,7 @@ def parse_course(text: str) -> Dict[str, Any]:
         event["weeks"] = w
 
     return event
+
 
 def attach_fragment_to_event(event: Dict[str, Any], fragment: str) -> None:
     fragment = clean(fragment)
@@ -983,6 +983,7 @@ def parse_modular(room_code: str, soup: BeautifulSoup) -> List[Dict[str, Any]]:
 
     return events
 
+
 def dedupe_events(events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     seen = set()
     out: List[Dict[str, Any]] = []
@@ -1007,6 +1008,606 @@ def dedupe_events(events: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         out.append(e)
 
     return out
+
+
+COURSE_TYPES = {"curs", "sem", "seminar", "lab", "laborator", "proiect", "pr", "lp"}
+
+
+def normalize_match_text(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "", norm(value))
+
+
+def normalize_teacher_for_match(value: Any) -> str:
+    t = norm(value)
+    t = re.sub(r"\b(prof|conf|lect|as|dr|drd|ing|univ)\b\.?", " ", t)
+    t = re.sub(r"[^a-z0-9]+", " ", t).strip()
+    parts = t.split()
+    if not parts:
+        return ""
+    # Keep the whole normalized string first; this is strict enough for exact matches.
+    return " ".join(parts)
+
+
+def short_teacher_for_match(value: Any) -> str:
+    t = normalize_teacher_for_match(value)
+    if not t:
+        return ""
+    return t.split()[0]
+
+
+def normalize_group_label(value: Any) -> str:
+    label = clean(value)
+    if not label:
+        return ""
+
+    label = label.replace("___", " • ")
+    label = label.replace("__", " • ")
+    label = label.replace("_", " ")
+    label = re.sub(r"\s*•\s*", " • ", label)
+    label = re.sub(r"\s+", " ", label).strip(" •\t\r\n")
+    return label
+
+
+def is_probable_group_label(value: Any) -> bool:
+    label = clean(value)
+    n = norm(label)
+
+    if not label or len(label) < 3:
+        return False
+
+    if any(
+        x in n
+        for x in ["luni", "marti", "miercuri", "joi", "vineri", "sambata", "duminica"]
+    ):
+        return False
+
+    if "___" in label:
+        return True
+
+    if "grupa" in n or re.search(r"\ban(?:ul)?\s+\d+\b", n):
+        return True
+
+    return False
+
+
+def extract_mobile_group_label(soup: BeautifulSoup, gid: int) -> str:
+    candidates: List[str] = []
+
+    for name in ["h1", "h2", "h3", "title", "b", "strong"]:
+        for tag in soup.find_all(name):
+            t = clean(tag.get_text(" ", strip=True))
+            if t:
+                candidates.append(t)
+
+    for line in soup.get_text("\n", strip=True).splitlines()[:25]:
+        t = clean(line)
+        if t:
+            candidates.append(t)
+
+    for candidate in candidates:
+        if is_probable_group_label(candidate):
+            return normalize_group_label(candidate)
+
+    return ""
+
+
+def split_mobile_activity_segments(text: str) -> List[str]:
+    line = clean(text)
+    if not line:
+        return []
+
+    # Sometimes the mobile page/search text collapses multiple activities into one line.
+    # Split only when there is whitespace before the next probable activity, so abbreviations
+    # like "L.engl" or "G.F.R." are not broken.
+    pattern = r"(?<=\.)\s+(?=[^,]{1,80},\s*(?:curs|sem|seminar|lab|laborator|proiect|pr|lp)\s*,\s*[^,]{1,30}\s*,)"
+    pieces = [
+        clean(x) for x in re.split(pattern, line, flags=re.IGNORECASE) if clean(x)
+    ]
+
+    if len(pieces) <= 1:
+        return [line]
+
+    return pieces
+
+
+def parse_mobile_group_activity_line(
+    line: str,
+    group_label: str,
+    gid: int,
+    day_idx: Optional[int],
+    start: str,
+    end: str,
+) -> List[Dict[str, Any]]:
+    out: List[Dict[str, Any]] = []
+
+    if day_idx is None or not start or not end:
+        return out
+
+    for segment in split_mobile_activity_segments(line):
+        chunks = [clean(x) for x in segment.split(",")]
+
+        if len(chunks) < 4:
+            continue
+
+        typ = chunks[1]
+        if norm(typ) not in COURSE_TYPES:
+            continue
+
+        room_code = extract_room_code(chunks[2])
+        if not room_code:
+            continue
+
+        subject = chunks[0]
+        teacher = chunks[3]
+
+        if not subject or not teacher:
+            continue
+
+        out.append(
+            {
+                "group": group_label,
+                "groupId": gid,
+                "roomCode": room_code,
+                "dayIndex": day_idx,
+                "start": start,
+                "end": end,
+                "subject": subject,
+                "type": typ,
+                "teacher": teacher,
+                "raw": segment,
+                "source": "mobile_group",
+            }
+        )
+
+    return out
+
+
+def parse_mobile_group_events(
+    soup: BeautifulSoup, group_label: str, gid: int
+) -> List[Dict[str, Any]]:
+    events: List[Dict[str, Any]] = []
+    current_day: Optional[int] = None
+    current_start = ""
+    current_end = ""
+
+    lines = [clean(x) for x in soup.get_text("\n", strip=True).splitlines()]
+
+    for raw_line in lines:
+        line = clean(raw_line)
+        if not line:
+            continue
+
+        n = norm(line)
+
+        if n in DAY_MAP:
+            current_day = DAY_MAP[n]
+            current_start = ""
+            current_end = ""
+            continue
+
+        interval_match = re.match(
+            r"^(\d{1,2})(?::(\d{2}))?\s*[-–]\s*(\d{1,2})(?::(\d{2}))?\s*(.*)$", line
+        )
+        if interval_match:
+            current_start = f"{int(interval_match.group(1)):02d}:{int(interval_match.group(2) or 0):02d}"
+            current_end = f"{int(interval_match.group(3)):02d}:{int(interval_match.group(4) or 0):02d}"
+            rest = clean(interval_match.group(5))
+
+            if rest:
+                events.extend(
+                    parse_mobile_group_activity_line(
+                        rest, group_label, gid, current_day, current_start, current_end
+                    )
+                )
+
+            continue
+
+        if "," in line and current_day is not None and current_start:
+            events.extend(
+                parse_mobile_group_activity_line(
+                    line, group_label, gid, current_day, current_start, current_end
+                )
+            )
+
+    return events
+
+
+def scan_one_mobile_group(gid: int, timeout: int = 5) -> Optional[Dict[str, Any]]:
+    url = MOBILE_GROUP_URL.format(id=gid)
+
+    try:
+        # Mobile group pages are lightweight. A short timeout prevents long tail stalls
+        # when empty/non-existing IDs do not respond quickly.
+        html = fetch(url, timeout=timeout, retries=1)
+    except Exception:
+        return None
+
+    soup = BeautifulSoup(html, "html.parser")
+    group_label = extract_mobile_group_label(soup, gid)
+
+    if not group_label:
+        return None
+
+    events = parse_mobile_group_events(soup, group_label, gid)
+
+    if not events:
+        return None
+
+    return {
+        "id": gid,
+        "group": group_label,
+        "url": url,
+        "events": events,
+    }
+
+
+def discover_mobile_group_ids_from_index() -> Dict[int, str]:
+    """Try to read group IDs from the mobile index before falling back to ID scan."""
+    found: Dict[int, str] = {}
+    index_url = "https://orar.usv.ro/orar/mobil/vizualizare/orarUp1.php"
+
+    try:
+        html = fetch(index_url, timeout=15, retries=2)
+    except Exception:
+        return found
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    for a in soup.find_all("a"):
+        href = a.get("href") or ""
+        text = clean(a.get_text(" ", strip=True) or a.get("title") or "")
+
+        if "mod=grupa" not in href:
+            continue
+
+        m = re.search(r"[?&]ID=(\d+)", href)
+        if not m:
+            continue
+
+        gid = int(m.group(1))
+        if is_probable_group_label(text):
+            found[gid] = normalize_group_label(text)
+        else:
+            found[gid] = ""
+
+    for opt in soup.find_all("option"):
+        text = clean(opt.get_text(" ", strip=True))
+        val = clean(opt.get("value") or "")
+
+        if not val.isdigit() or not is_probable_group_label(text):
+            continue
+
+        found[int(val)] = normalize_group_label(text)
+
+    return found
+
+
+def scan_mobile_group_id_batch(
+    ids: List[int], workers: int, timeout: int
+) -> List[Dict[str, Any]]:
+    """Scan one bounded batch of mobile group IDs.
+
+    Important: we do NOT submit thousands of futures at once. This avoids the
+    "scanned groups 3000/3000 and waiting forever" feeling on slow Orar responses.
+    """
+    found: List[Dict[str, Any]] = []
+
+    if not ids:
+        return found
+
+    with ThreadPoolExecutor(max_workers=max(1, workers)) as pool:
+        futures = {pool.submit(scan_one_mobile_group, gid, timeout): gid for gid in ids}
+
+        for fut in as_completed(futures):
+            try:
+                item = fut.result()
+            except Exception:
+                item = None
+
+            if item:
+                found.append(item)
+                print(
+                    f"  group {item['id']} -> {item['group']} ({len(item.get('events', []))} events)",
+                    flush=True,
+                )
+
+    return found
+
+
+def scan_mobile_groups(args: argparse.Namespace) -> List[Dict[str, Any]]:
+    groups: List[Dict[str, Any]] = []
+    workers = max(
+        1, int(getattr(args, "group_workers", 0) or getattr(args, "workers", 4) or 4)
+    )
+    timeout = max(2, int(getattr(args, "group_timeout", 5) or 5))
+    batch_size = max(20, int(getattr(args, "group_batch_size", 100) or 100))
+    stop_after_empty = max(0, int(getattr(args, "group_stop_after_empty", 220) or 0))
+
+    discovered: Dict[int, str] = {}
+
+    if not getattr(args, "group_scan_only", False):
+        discovered = discover_mobile_group_ids_from_index()
+
+    if discovered:
+        group_ids = sorted(discovered.keys())
+        print(f"Mobile group index discovery: {len(group_ids)} candidate group IDs.")
+        total = len(group_ids)
+
+        for offset in range(0, total, batch_size):
+            batch_ids = group_ids[offset : offset + batch_size]
+            batch_found = scan_mobile_group_id_batch(batch_ids, workers, timeout)
+            groups.extend(batch_found)
+            print(
+                f"  scanned groups {min(offset + len(batch_ids), total)}/{total} "
+                f"(found {len(groups)})",
+                flush=True,
+            )
+
+    else:
+        print(f"Scanning mobile group IDs {args.group_scan_min}-{args.group_scan_max}...")
+        total = args.group_scan_max - args.group_scan_min + 1
+        scanned = 0
+        empty_streak = 0
+
+        current = args.group_scan_min
+        while current <= args.group_scan_max:
+            last = min(args.group_scan_max, current + batch_size - 1)
+            batch_ids = list(range(current, last + 1))
+            batch_found = scan_mobile_group_id_batch(batch_ids, workers, timeout)
+
+            groups.extend(batch_found)
+            scanned += len(batch_ids)
+
+            if batch_found:
+                # Count empty IDs after the latest found ID inside this batch.
+                last_found_id = max(int(x.get("id", 0)) for x in batch_found)
+                empty_streak = max(0, last - last_found_id)
+            else:
+                empty_streak += len(batch_ids)
+
+            print(
+                f"  scanned groups {scanned}/{total} "
+                f"(found {len(groups)}, empty-streak {empty_streak})",
+                flush=True,
+            )
+
+            # Orar mobile group IDs are clustered. After a long empty tail,
+            # continuing up to 3000 only wastes time and causes the terminal to look stuck.
+            if stop_after_empty and empty_streak >= stop_after_empty and groups:
+                print(
+                    f"  stopping group scan after {empty_streak} empty IDs "
+                    f"(last found group around ID {max(int(g.get('id', 0)) for g in groups)})",
+                    flush=True,
+                )
+                break
+
+            current = last + 1
+
+    groups.sort(key=lambda x: (str(x.get("group", "")), int(x.get("id", 0))))
+    print(
+        f"Mobile group scan complete: pages={len(groups)}, "
+        f"events={sum(len(g.get('events', [])) for g in groups)}",
+        flush=True,
+    )
+    return groups
+
+
+def room_event_match_keys(event: Dict[str, Any]) -> Dict[str, Tuple[Any, ...]]:
+    room = key(event.get("roomCode"))
+    day = event.get("dayIndex")
+    start = event.get("start") or event.get("startTime") or ""
+    end = event.get("end") or event.get("endTime") or ""
+    subject = normalize_match_text(
+        event.get("subject")
+        or event.get("discipline")
+        or event.get("course")
+        or event.get("title")
+        or ""
+    )
+    typ = normalize_match_text(event.get("type") or "")
+    teacher = normalize_teacher_for_match(
+        event.get("teacher") or event.get("cadru") or event.get("professor") or ""
+    )
+    teacher_short = short_teacher_for_match(
+        event.get("teacher") or event.get("cadru") or event.get("professor") or ""
+    )
+
+    return {
+        "exact": (room, day, start, subject, typ, teacher),
+        "exact_no_end": (room, day, start, subject, typ, teacher_short),
+        "loose": (room, day, start, subject, typ),
+        "subject_only": (room, day, start, subject),
+        "with_end": (room, day, start, end, subject, typ),
+    }
+
+
+def add_group_to_room_event(
+    event: Dict[str, Any], group_label: str, source: str, match_level: str
+) -> bool:
+    group_label = normalize_group_label(group_label)
+
+    if not group_label:
+        return False
+
+    groups: List[str] = []
+
+    existing_groups = event.get("groups")
+    if isinstance(existing_groups, list):
+        groups.extend(
+            clean(x) for x in existing_groups if clean(x) and not is_blank_group(x)
+        )
+
+    existing_group = clean(event.get("group"))
+    if existing_group and not is_blank_group(existing_group):
+        groups.append(existing_group)
+
+    normalized_seen = {norm(x) for x in groups}
+
+    if norm(group_label) in normalized_seen:
+        return False
+
+    groups.append(group_label)
+    event["groups"] = groups
+    event["group"] = ", ".join(groups)
+    event["groupSource"] = source
+    event["groupMatch"] = match_level
+    return True
+
+
+def enrich_rooms_with_mobile_groups(
+    out_rooms: Dict[str, Any], args: argparse.Namespace
+) -> Dict[str, Any]:
+    """
+    Fast, indexed, no-silent-hang mobile group enrichment.
+
+    Design:
+      1) Scan mobile group schedules.
+      2) Immediately save a debug/cache copy to data/mobile-group-schedules-cache.json.
+      3) Build several dictionary indexes for room events.
+      4) Match group events by O(1) dictionary lookups, not nested loops.
+      5) Print progress every 1000 group events so terminal never looks frozen.
+    """
+    meta = {
+        "enabled": True,
+        "source": "mobile_group_schedules",
+        "groupPages": 0,
+        "groupEvents": 0,
+        "matchedRoomEvents": 0,
+        "multiGroupRoomEvents": 0,
+        "ambiguousMatches": 0,
+        "unmatchedGroupEvents": 0,
+        "matchSeconds": 0.0,
+    }
+
+    t0 = time.perf_counter()
+    groups = scan_mobile_groups(args)
+    meta["groupPages"] = len(groups)
+    meta["groupEvents"] = sum(len(g.get("events", [])) for g in groups)
+
+    # Save the scan result before matching. If anything is interrupted later,
+    # the expensive group scan is still available for inspection/reuse.
+    try:
+        cache_path = Path("data/mobile-group-schedules-cache.json")
+        cache_path.parent.mkdir(parents=True, exist_ok=True)
+        cache_path.write_text(
+            json.dumps(
+                {
+                    "generatedAt": datetime.now().isoformat(timespec="seconds"),
+                    "groupPages": meta["groupPages"],
+                    "groupEvents": meta["groupEvents"],
+                    "groups": groups,
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            encoding="utf-8",
+        )
+        print(f"Saved mobile group cache: {cache_path}", flush=True)
+    except Exception as e:
+        print(f"Warning: could not save mobile group cache: {e}", flush=True)
+
+    if not groups:
+        print("No mobile group pages found. Skipping group enrichment.", flush=True)
+        return meta
+
+    print(
+        f"Matching {meta['groupEvents']} mobile group events to room events...",
+        flush=True,
+    )
+
+    index_levels = ["exact", "exact_no_end", "with_end", "loose", "subject_only"]
+    indexes: Dict[str, Dict[Tuple[Any, ...], List[Dict[str, Any]]]] = {
+        level: {} for level in index_levels
+    }
+
+    indexed_room_events = 0
+
+    for room in out_rooms.values():
+        for event in room.get("events", []) or []:
+            if not isinstance(event, dict):
+                continue
+
+            keys = room_event_match_keys(event)
+
+            # Room, start and subject are minimum requirements.
+            if not keys["exact"][0] or not keys["exact"][2] or not keys["exact"][3]:
+                continue
+
+            indexed_room_events += 1
+
+            for level in index_levels:
+                sig = keys[level]
+                indexes[level].setdefault(sig, []).append(event)
+
+    print(
+        f"Built match indexes for {indexed_room_events} room events.",
+        flush=True,
+    )
+
+    flat_group_events: List[Tuple[str, Dict[str, Any]]] = []
+    for group_page in groups:
+        group_label = group_page.get("group", "")
+        for ge in group_page.get("events", []) or []:
+            if isinstance(ge, dict):
+                flat_group_events.append((group_label, ge))
+
+    total_group_events = len(flat_group_events)
+
+    for idx, (group_label, ge) in enumerate(flat_group_events, 1):
+        keys = room_event_match_keys(ge)
+        matched = False
+
+        # Prefer strict keys. Fall back only when the candidate is unique.
+        for level in index_levels:
+            candidates = indexes[level].get(keys[level], [])
+
+            if len(candidates) == 1:
+                if add_group_to_room_event(
+                    candidates[0],
+                    group_label,
+                    "mobile_group_schedule",
+                    level,
+                ):
+                    meta["matchedRoomEvents"] += 1
+                matched = True
+                break
+
+            if len(candidates) > 1:
+                meta["ambiguousMatches"] += 1
+                matched = True
+                break
+
+        if not matched:
+            meta["unmatchedGroupEvents"] += 1
+
+        if idx % 1000 == 0 or idx == total_group_events:
+            print(
+                f"  matched check {idx}/{total_group_events} "
+                f"(matched={meta['matchedRoomEvents']}, "
+                f"ambiguous={meta['ambiguousMatches']}, "
+                f"unmatched={meta['unmatchedGroupEvents']})",
+                flush=True,
+            )
+
+    multi = 0
+    for room in out_rooms.values():
+        for event in room.get("events", []) or []:
+            if isinstance(event.get("groups"), list) and len(event.get("groups")) > 1:
+                multi += 1
+
+    meta["multiGroupRoomEvents"] = multi
+    meta["matchSeconds"] = round(time.perf_counter() - t0, 2)
+
+    print(
+        "Group enrichment complete: "
+        f"matched={meta['matchedRoomEvents']}, "
+        f"multi={meta['multiGroupRoomEvents']}, "
+        f"ambiguous={meta['ambiguousMatches']}, "
+        f"unmatched={meta['unmatchedGroupEvents']}, "
+        f"seconds={meta['matchSeconds']}",
+        flush=True,
+    )
+    return meta
 
 
 def scrape_room(room: Dict[str, str]) -> Dict[str, Any]:
@@ -1106,10 +1707,34 @@ def build_result(
         events = room.get("events", [])
 
         for e in events:
-            # Keep JSON/frontend clean: if Orar does not provide a group, write "-" instead of empty string.
-            # Real group values are preserved; only blank/missing group fields are normalized.
-            if is_blank_group(e.get("group")):
+            # Keep JSON/frontend clean and support multiple groups from mobile group schedules.
+            groups_value = e.get("groups")
+            cleaned_groups: List[str] = []
+
+            if isinstance(groups_value, list):
+                for g in groups_value:
+                    g = normalize_group_label(g)
+                    if (
+                        g
+                        and not is_blank_group(g)
+                        and norm(g) not in {norm(x) for x in cleaned_groups}
+                    ):
+                        cleaned_groups.append(g)
+
+            group_value = normalize_group_label(e.get("group"))
+            if (
+                group_value
+                and not is_blank_group(group_value)
+                and norm(group_value) not in {norm(x) for x in cleaned_groups}
+            ):
+                cleaned_groups.append(group_value)
+
+            if cleaned_groups:
+                e["groups"] = cleaned_groups
+                e["group"] = ", ".join(cleaned_groups)
+            else:
                 e["group"] = "-"
+                e.pop("groups", None)
 
             if not e.get("start") or not e.get("end"):
                 bad_time += 1
@@ -1152,6 +1777,37 @@ def main() -> int:
     ap.add_argument("--scan-min", type=int, default=1)
     ap.add_argument("--scan-max", type=int, default=1000)
     ap.add_argument("--workers", type=int, default=16)
+    ap.add_argument(
+        "--no-group-enrichment",
+        action="store_true",
+        help="Disable mobile group schedule enrichment",
+    )
+    ap.add_argument("--group-scan-min", type=int, default=1)
+    ap.add_argument("--group-scan-max", type=int, default=3000)
+    ap.add_argument("--group-workers", type=int, default=4)
+    ap.add_argument(
+        "--group-timeout",
+        type=int,
+        default=5,
+        help="Timeout in seconds for each mobile group page request",
+    )
+    ap.add_argument(
+        "--group-batch-size",
+        type=int,
+        default=100,
+        help="How many mobile group IDs to scan per batch",
+    )
+    ap.add_argument(
+        "--group-stop-after-empty",
+        type=int,
+        default=50,
+        help="Stop direct group scan after this many empty IDs once at least one group was found. 0 disables early stop.",
+    )
+    ap.add_argument(
+        "--group-scan-only",
+        action="store_true",
+        help="Skip mobile index discovery and scan group IDs directly",
+    )
     ap.add_argument("--week1-start-date", default=WEEK1_START)
     ap.add_argument("--limit", type=int, default=0, help="For quick test only")
     args = ap.parse_args()
@@ -1244,7 +1900,14 @@ def main() -> int:
                 "error": str(e),
             }
 
+    if args.no_group_enrichment:
+        group_enrichment_meta = {"enabled": False, "source": "mobile_group_schedules"}
+    else:
+        print("Enriching room events with mobile group schedules...")
+        group_enrichment_meta = enrich_rooms_with_mobile_groups(out_rooms, args)
+
     result = build_result(out_rooms, args, total_events)
+    result["meta"]["groupEnrichment"] = group_enrichment_meta
 
     path = Path(args.output)
     path.parent.mkdir(parents=True, exist_ok=True)
