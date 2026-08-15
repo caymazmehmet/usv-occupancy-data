@@ -30,12 +30,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install requests beautifulsoup4
 
       - name: Update Orar and academic calendar data
-        # BURASI ÖNEMLİ: GitHub'da zaten var olan tools klasörünü ve senin 50 limitini kullanıyoruz
         run: |
-          python tools/update_occupancy_all.py --scan-max 850 --workers 16 --group-stop-after-empty 50
+          python tools/fetch_usv_all_campus_orar.py --group-stop-after-empty 50
 
       - name: Commit and push JSON updates
         run: |
