@@ -33,8 +33,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Update Orar and academic calendar data
+        # BURASI ÖNEMLİ: GitHub'da zaten var olan tools klasörünü ve senin 50 limitini kullanıyoruz
         run: |
-          # Dikkat: GitHub'da var olan "tools" klasöründeki dosyayı ve 50 limitini kullanıyoruz!
           python tools/update_occupancy_all.py --scan-max 850 --workers 16 --group-stop-after-empty 50
 
       - name: Commit and push JSON updates
@@ -42,8 +42,11 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
-          git reset --soft origin/main || true
+          git rebase origin/main || git rebase --abort
           git add data/*.json backup/last-good-*.json || true
-          git diff --cached --quiet && echo "No changes" || git commit -m "Update USV occupancy data [skip ci]"
-          git pull origin main --rebase || true
-          git push origin main
+          if git diff --cached --quiet; then
+            echo "No JSON changes to commit."
+          else
+            git commit -m "Update USV occupancy data [skip ci]"
+            git push origin main
+          fi
