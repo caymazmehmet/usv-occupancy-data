@@ -1,7 +1,7 @@
 {
   "meta": {
     "source": "orar.usv.ro/orar/vizualizare/orarSPG.php",
-    "generatedAt": "2026-08-17T22:24:19",
+    "generatedAt": "2026-09-05T23:37:50",
     "week1StartDate": "2026-02-23",
     "buildingCount": 20,
     "roomCount": 307,
@@ -18,7 +18,7 @@
       "multiGroupRoomEvents": 430,
       "ambiguousMatches": 55,
       "unmatchedGroupEvents": 364,
-      "matchSeconds": 73.15
+      "matchSeconds": 114.84
     }
   },
   "buildings": {
