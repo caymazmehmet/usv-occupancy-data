@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-18T23:56:10",
+  "generatedAt": "2026-09-19T23:56:10",
   "groupPages": 60,
-  "groupEvents": 355,
+  "groupEvents": 367,
   "groups": [
     {
       "id": 391,
@@ -1332,8 +1332,8 @@
           "groupId": 302,
           "roomCode": "E120",
           "dayIndex": 4,
-          "start": "12:00",
-          "end": "13:00",
+          "start": "14:00",
+          "end": "15:00",
           "subject": "Fiz",
           "type": "curs",
           "teacher": "Jarcau M.",
@@ -1365,8 +1365,8 @@
           "groupId": 303,
           "roomCode": "E120",
           "dayIndex": 4,
-          "start": "12:00",
-          "end": "13:00",
+          "start": "14:00",
+          "end": "15:00",
           "subject": "Fiz",
           "type": "curs",
           "teacher": "Jarcau M.",
@@ -1392,6 +1392,19 @@
           "teacher": "Oroian M.",
           "raw": "AI,curs,E120,Oroian M.",
           "source": "mobile_group"
+        },
+        {
+          "group": "FIA • CEPA an 2 • grupa 1a",
+          "groupId": 315,
+          "roomCode": "E120",
+          "dayIndex": 5,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "gen.",
+          "type": "curs",
+          "teacher": "Albu E.",
+          "raw": "gen.,curs,E120,Albu E.",
+          "source": "mobile_group"
         }
       ]
     },
@@ -1411,6 +1424,19 @@
           "type": "curs",
           "teacher": "Oroian M.",
           "raw": "AI,curs,E120,Oroian M.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIA • CEPA an 2 • grupa 1b",
+          "groupId": 316,
+          "roomCode": "E120",
+          "dayIndex": 5,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "gen.",
+          "type": "curs",
+          "teacher": "Albu E.",
+          "raw": "gen.,curs,E120,Albu E.",
           "source": "mobile_group"
         }
       ]
@@ -1472,6 +1498,32 @@
           "teacher": "Ghiuta O.",
           "raw": "Marketing,curs,E120,Ghiuta O.",
           "source": "mobile_group"
+        },
+        {
+          "group": "FIA • CEPA an 4 • grupa 1a",
+          "groupId": 335,
+          "roomCode": "E120",
+          "dayIndex": 4,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "Aditivi",
+          "type": "curs",
+          "teacher": "Amariei S.",
+          "raw": "Aditivi,curs,E120,Amariei S.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIA • CEPA an 4 • grupa 1a",
+          "groupId": 335,
+          "roomCode": "J007",
+          "dayIndex": 4,
+          "start": "14:00",
+          "end": "15:00",
+          "subject": "TPAOV",
+          "type": "curs",
+          "teacher": "Dranca F.",
+          "raw": "TPAOV,curs,J7,Dranca F.",
+          "source": "mobile_group"
         }
       ]
     },
@@ -1483,27 +1535,27 @@
         {
           "group": "FIA • IPA an 1 • grupa 1a",
           "groupId": 299,
-          "roomCode": "E120",
+          "roomCode": "E218",
           "dayIndex": 4,
           "start": "12:00",
           "end": "13:00",
           "subject": "Fiz",
-          "type": "curs",
+          "type": "lab",
           "teacher": "Jarcau M.",
-          "raw": "Fiz,curs,E120,Jarcau M.",
+          "raw": "Fiz,lab,E218,Jarcau M.",
           "source": "mobile_group"
         },
         {
           "group": "FIA • IPA an 1 • grupa 1a",
           "groupId": 299,
-          "roomCode": "E218",
+          "roomCode": "E120",
           "dayIndex": 4,
           "start": "14:00",
           "end": "15:00",
           "subject": "Fiz",
-          "type": "lab",
+          "type": "curs",
           "teacher": "Jarcau M.",
-          "raw": "Fiz,lab,E218,Jarcau M.",
+          "raw": "Fiz,curs,E120,Jarcau M.",
           "source": "mobile_group"
         }
       ]
@@ -1531,8 +1583,8 @@
           "groupId": 300,
           "roomCode": "E120",
           "dayIndex": 4,
-          "start": "12:00",
-          "end": "13:00",
+          "start": "14:00",
+          "end": "15:00",
           "subject": "Fiz",
           "type": "curs",
           "teacher": "Jarcau M.",
@@ -1558,6 +1610,19 @@
           "teacher": "Oroian M.",
           "raw": "AI,curs,E120,Oroian M.",
           "source": "mobile_group"
+        },
+        {
+          "group": "FIA • IPA an 2 • grupa 1a",
+          "groupId": 311,
+          "roomCode": "E120",
+          "dayIndex": 5,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "gen.",
+          "type": "curs",
+          "teacher": "Albu E.",
+          "raw": "gen.,curs,E120,Albu E.",
+          "source": "mobile_group"
         }
       ]
     },
@@ -1577,6 +1642,19 @@
           "type": "curs",
           "teacher": "Oroian M.",
           "raw": "AI,curs,E120,Oroian M.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIA • IPA an 2 • grupa 1b",
+          "groupId": 333,
+          "roomCode": "E120",
+          "dayIndex": 5,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "gen.",
+          "type": "curs",
+          "teacher": "Albu E.",
+          "raw": "gen.,curs,E120,Albu E.",
           "source": "mobile_group"
         }
       ]
@@ -1631,6 +1709,19 @@
           "teacher": "Ghiuta O.",
           "raw": "Marketing,curs,E120,Ghiuta O.",
           "source": "mobile_group"
+        },
+        {
+          "group": "FIA • IPA an 4 • grupa 1a",
+          "groupId": 332,
+          "roomCode": "E120",
+          "dayIndex": 4,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "Aditivi",
+          "type": "curs",
+          "teacher": "Amariei S.",
+          "raw": "Aditivi,curs,E120,Amariei S.",
+          "source": "mobile_group"
         }
       ]
     },
@@ -1664,6 +1755,32 @@
           "teacher": "Dabija A.",
           "raw": "Bz cercet,pr,E220,Dabija A.",
           "source": "mobile_group"
+        },
+        {
+          "group": "FIA • MCEPA an 1 • grupa 1a",
+          "groupId": 341,
+          "roomCode": "E120",
+          "dayIndex": 6,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "Contaminanti",
+          "type": "curs",
+          "teacher": "Amariei S.",
+          "raw": "Contaminanti,curs,E120,Amariei S.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIA • MCEPA an 1 • grupa 1a",
+          "groupId": 341,
+          "roomCode": "J007",
+          "dayIndex": 6,
+          "start": "12:00",
+          "end": "13:00",
+          "subject": "Met mod micro",
+          "type": "curs",
+          "teacher": "Dranca F.",
+          "raw": "Met mod micro,curs,J7,Dranca F.",
+          "source": "mobile_group"
         }
       ]
     },
@@ -1688,14 +1805,14 @@
         {
           "group": "FIA • MCEPA an 2 • grupa 1a",
           "groupId": 349,
-          "roomCode": "E120",
+          "roomCode": "E220",
           "dayIndex": 1,
           "start": "18:00",
           "end": "19:00",
           "subject": "Manag antrep",
           "type": "sem",
           "teacher": "Ghiuta O.",
-          "raw": "Manag antrep,sem,E120,Ghiuta O.",
+          "raw": "Manag antrep,sem,E220,Ghiuta O.",
           "source": "mobile_group"
         },
         {
@@ -1756,6 +1873,19 @@
           "teacher": "Dabija A.",
           "raw": "Bz cercet,pr,E220,Dabija A.",
           "source": "mobile_group"
+        },
+        {
+          "group": "FIA • MIASP an 1 • grupa 1a",
+          "groupId": 345,
+          "roomCode": "E220",
+          "dayIndex": 6,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "Contaminanti",
+          "type": "curs",
+          "teacher": "Amariei S.",
+          "raw": "Contaminanti,curs,E220,Amariei S.",
+          "source": "mobile_group"
         }
       ]
     },
@@ -1788,6 +1918,19 @@
           "type": "pr",
           "teacher": "Dabija A.",
           "raw": "Bz cercet,pr,E220,Dabija A.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIA • MIASP an 1 • grupa 1b",
+          "groupId": 346,
+          "roomCode": "E220",
+          "dayIndex": 6,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "Contaminanti",
+          "type": "curs",
+          "teacher": "Amariei S.",
+          "raw": "Contaminanti,curs,E220,Amariei S.",
           "source": "mobile_group"
         }
       ]
@@ -1834,6 +1977,19 @@
           "type": "curs",
           "teacher": "Dabija A.",
           "raw": "Bz cercet,curs,E120,Dabija A.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIA • MSMSA an 1 • grupa 1a",
+          "groupId": 339,
+          "roomCode": "E120",
+          "dayIndex": 6,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "alim.",
+          "type": "curs",
+          "teacher": "Amariei S.",
+          "raw": "alim.,curs,E120,Amariei S.",
           "source": "mobile_group"
         }
       ]
