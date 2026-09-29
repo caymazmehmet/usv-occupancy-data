@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-28T00:21:45",
+  "generatedAt": "2026-09-29T01:32:54",
   "groupPages": 133,
-  "groupEvents": 1600,
+  "groupEvents": 1613,
   "groups": [
     {
       "id": 391,
@@ -480,14 +480,14 @@
         {
           "group": "FDSA • AP an 2 • grupa1a",
           "groupId": 393,
-          "roomCode": "B307",
+          "roomCode": "PB301",
           "dayIndex": 2,
-          "start": "18:00",
-          "end": "19:00",
+          "start": "16:00",
+          "end": "17:00",
           "subject": "ControlAdm",
           "type": "sem",
           "teacher": "Viorescu R.",
-          "raw": "ControlAdm,sem,B307 Sala Curs,Viorescu R.",
+          "raw": "ControlAdm,sem,PB301,Viorescu R.",
           "source": "mobile_group"
         },
         {
@@ -1627,14 +1627,14 @@
         {
           "group": "FDSA • Drept an 4 • grupa1",
           "groupId": 417,
-          "roomCode": "PB004",
+          "roomCode": "PB003",
           "dayIndex": 4,
           "start": "18:00",
           "end": "19:00",
           "subject": "Cjd.Dr.medical",
           "type": "sem",
           "teacher": "Balan L.",
-          "raw": "Cjd.Dr.medical,sem,PB4,Balan L.",
+          "raw": "Cjd.Dr.medical,sem,PB3,Balan L.",
           "source": "mobile_group"
         },
         {
@@ -2618,19 +2618,6 @@
         {
           "group": "FEAA • AI an 2 • grupa1a",
           "groupId": 381,
-          "roomCode": "E126",
-          "dayIndex": 2,
-          "start": "18:00",
-          "end": "19:00",
-          "subject": "TrComInţ",
-          "type": "sem",
-          "teacher": "Iacoban R.",
-          "raw": "TrComInţ,sem,E126,Iacoban R.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FEAA • AI an 2 • grupa1a",
-          "groupId": 381,
           "roomCode": "E118",
           "dayIndex": 3,
           "start": "16:00",
@@ -2644,6 +2631,19 @@
         {
           "group": "FEAA • AI an 2 • grupa1a",
           "groupId": 381,
+          "roomCode": "ED015",
+          "dayIndex": 4,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "Pieţe",
+          "type": "sem",
+          "teacher": "Cozorici A.",
+          "raw": "Pieţe,sem,ED015,Cozorici A.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEAA • AI an 2 • grupa1a",
+          "groupId": 381,
           "roomCode": "E132",
           "dayIndex": 4,
           "start": "12:00",
@@ -2652,19 +2652,6 @@
           "type": "curs",
           "teacher": "Larion A.",
           "raw": "DCI,curs,E132,Larion A.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FEAA • AI an 2 • grupa1a",
-          "groupId": 381,
-          "roomCode": "E123",
-          "dayIndex": 4,
-          "start": "14:00",
-          "end": "15:00",
-          "subject": "Pieţe",
-          "type": "sem",
-          "teacher": "Cozorici A.",
-          "raw": "Pieţe,sem,E123,Cozorici A.",
           "source": "mobile_group"
         },
         {
@@ -2704,6 +2691,19 @@
           "type": "curs",
           "teacher": "Serdenciuc N.",
           "raw": "Ped II,curs,A112,Serdenciuc N.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEAA • AI an 2 • grupa1a",
+          "groupId": 381,
+          "roomCode": "ED011",
+          "dayIndex": 5,
+          "start": "14:00",
+          "end": "15:00",
+          "subject": "TrComInţ",
+          "type": "sem",
+          "teacher": "Iacoban R.",
+          "raw": "TrComInţ,sem,ED011,Iacoban R.",
           "source": "mobile_group"
         }
       ]
@@ -2867,6 +2867,19 @@
           "type": "curs",
           "teacher": "Hurjui M.",
           "raw": "Dezv loc reg,curs,E005,Hurjui M.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEAA • AI an 3 • grupa1a",
+          "groupId": 383,
+          "roomCode": "D107",
+          "dayIndex": 5,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "IER",
+          "type": "sem",
+          "teacher": "Iacoban R.",
+          "raw": "IER,sem,D107,Iacoban R.",
           "source": "mobile_group"
         }
       ]
@@ -4678,6 +4691,19 @@
         {
           "group": "FEAA • ECTS an 2 • grupa1a",
           "groupId": 423,
+          "roomCode": "ED001",
+          "dayIndex": 1,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "TrComInţ",
+          "type": "sem",
+          "teacher": "Iacoban R.",
+          "raw": "TrComInţ,sem,ED001,Iacoban R.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEAA • ECTS an 2 • grupa1a",
+          "groupId": 423,
           "roomCode": "E123",
           "dayIndex": 1,
           "start": "14:00",
@@ -4686,19 +4712,6 @@
           "type": "sem",
           "teacher": "Cosmulese G.",
           "raw": "Contr aud int,sem,E123,Cosmulese G.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FEAA • ECTS an 2 • grupa1a",
-          "groupId": 423,
-          "roomCode": "ED011",
-          "dayIndex": 1,
-          "start": "16:00",
-          "end": "17:00",
-          "subject": "TrComInţ",
-          "type": "sem",
-          "teacher": "Iacoban R.",
-          "raw": "TrComInţ,sem,ED011,Iacoban R.",
           "source": "mobile_group"
         },
         {
@@ -5095,19 +5108,6 @@
         {
           "group": "FEAA • FB an 1 • grupa1a",
           "groupId": 429,
-          "roomCode": "AULAE",
-          "dayIndex": 2,
-          "start": "12:00",
-          "end": "13:00",
-          "subject": "Ps ed",
-          "type": "curs",
-          "teacher": "Bujor L.",
-          "raw": "Ps ed,curs,Aula E,Bujor L.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FEAA • FB an 1 • grupa1a",
-          "groupId": 429,
           "roomCode": "E118",
           "dayIndex": 3,
           "start": "08:00",
@@ -5356,14 +5356,14 @@
         {
           "group": "FEAA • FB an 2 • grupa1a",
           "groupId": 433,
-          "roomCode": "A109",
+          "roomCode": "A111",
           "dayIndex": 2,
           "start": "08:00",
           "end": "09:00",
           "subject": "Fin loc",
-          "type": "sem",
+          "type": "curs",
           "teacher": "Ichim C.",
-          "raw": "Fin loc,sem,A109,Ichim C.",
+          "raw": "Fin loc,curs,A111,Ichim C.",
           "source": "mobile_group"
         },
         {
@@ -5478,9 +5478,9 @@
           "start": "10:00",
           "end": "11:00",
           "subject": "Fin loc",
-          "type": "curs",
+          "type": "sem",
           "teacher": "Ichim C.",
-          "raw": "Fin loc,curs,E005,Ichim C.",
+          "raw": "Fin loc,sem,E005,Ichim C.",
           "source": "mobile_group"
         },
         {
@@ -5545,14 +5545,14 @@
         {
           "group": "FEAA • FB an 2 • grupa2a",
           "groupId": 434,
-          "roomCode": "A109",
+          "roomCode": "A111",
           "dayIndex": 2,
           "start": "08:00",
           "end": "09:00",
           "subject": "Fin loc",
-          "type": "sem",
+          "type": "curs",
           "teacher": "Ichim C.",
-          "raw": "Fin loc,sem,A109,Ichim C.",
+          "raw": "Fin loc,curs,A111,Ichim C.",
           "source": "mobile_group"
         },
         {
@@ -5667,9 +5667,9 @@
           "start": "10:00",
           "end": "11:00",
           "subject": "Fin loc",
-          "type": "curs",
+          "type": "sem",
           "teacher": "Ichim C.",
-          "raw": "Fin loc,curs,E005,Ichim C.",
+          "raw": "Fin loc,sem,E005,Ichim C.",
           "source": "mobile_group"
         },
         {
@@ -5912,8 +5912,8 @@
           "groupId": 442,
           "roomCode": "AULAE",
           "dayIndex": 2,
-          "start": "12:00",
-          "end": "13:00",
+          "start": "10:00",
+          "end": "11:00",
           "subject": "Ps ed",
           "type": "curs",
           "teacher": "Bujor L.",
@@ -6425,19 +6425,6 @@
         {
           "group": "FEAA • MNG an 2 • grupa1a",
           "groupId": 450,
-          "roomCode": "H001",
-          "dayIndex": 2,
-          "start": "16:00",
-          "end": "17:00",
-          "subject": "TrComInţ",
-          "type": "sem",
-          "teacher": "Iacoban R.",
-          "raw": "TrComInţ,sem,H001,Iacoban R.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FEAA • MNG an 2 • grupa1a",
-          "groupId": 450,
           "roomCode": "E101",
           "dayIndex": 3,
           "start": "08:00",
@@ -6485,6 +6472,19 @@
           "type": "curs",
           "teacher": "Pașcu P.",
           "raw": "Business int,curs,E132,Pașcu P.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEAA • MNG an 2 • grupa1a",
+          "groupId": 450,
+          "roomCode": "ED015",
+          "dayIndex": 5,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "TrComInţ",
+          "type": "sem",
+          "teacher": "Iacoban R.",
+          "raw": "TrComInţ,sem,ED015,Iacoban R.",
           "source": "mobile_group"
         },
         {
@@ -6596,6 +6596,19 @@
           "type": "sem",
           "teacher": "Susu S.",
           "raw": "AE,sem,A033,Susu S.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEAA • MNG an 3 • grupa1a",
+          "groupId": 447,
+          "roomCode": "A111",
+          "dayIndex": 4,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "Pieţe",
+          "type": "sem",
+          "teacher": "Cozorici A.",
+          "raw": "Pieţe,sem,A111,Cozorici A.",
           "source": "mobile_group"
         },
         {
@@ -7225,10 +7238,10 @@
           "dayIndex": 1,
           "start": "18:00",
           "end": "19:00",
-          "subject": "TSMB",
-          "type": "curs",
-          "teacher": "Holubiac I.",
-          "raw": "TSMB,curs,A114,Holubiac I.",
+          "subject": "Semiologie",
+          "type": "sem",
+          "teacher": "Pohoață A.",
+          "raw": "Semiologie,sem,A114,Pohoață A.",
           "source": "mobile_group"
         },
         {
@@ -7242,19 +7255,6 @@
           "type": "curs",
           "teacher": "Constantinescu M.",
           "raw": "MTC,curs,A114,Constantinescu M.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FEFS • KMS an 2 • 1124a",
-          "groupId": 362,
-          "roomCode": "A020",
-          "dayIndex": 2,
-          "start": "10:00",
-          "end": "11:00",
-          "subject": "EAIUKt",
-          "type": "lab",
-          "teacher": "Benedek F.",
-          "raw": "EAIUKt,lab,A20,Benedek F.",
           "source": "mobile_group"
         },
         {
@@ -7281,6 +7281,19 @@
           "type": "curs",
           "teacher": "Pricop G.",
           "raw": "Kinesiologie,curs,A114,Pricop G.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEFS • KMS an 2 • 1124a",
+          "groupId": 362,
+          "roomCode": "A020",
+          "dayIndex": 3,
+          "start": "12:00",
+          "end": "13:00",
+          "subject": "EAIUKt",
+          "type": "lab",
+          "teacher": "Benedek F.",
+          "raw": "EAIUKt,lab,A20,Benedek F.",
           "source": "mobile_group"
         },
         {
@@ -7320,6 +7333,19 @@
           "type": "curs",
           "teacher": "Serdenciuc N.",
           "raw": "Ped2,curs,A112,Serdenciuc N.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FEFS • KMS an 2 • 1124a",
+          "groupId": 362,
+          "roomCode": "A114",
+          "dayIndex": 5,
+          "start": "18:00",
+          "end": "19:00",
+          "subject": "Semiologie",
+          "type": "curs",
+          "teacher": "Pohoață A.",
+          "raw": "Semiologie,curs,A114,Pohoață A.",
           "source": "mobile_group"
         }
       ]
@@ -7397,19 +7423,6 @@
         {
           "group": "FIA • CEPA an 1 • grupa 1a",
           "groupId": 302,
-          "roomCode": "E120",
-          "dayIndex": 2,
-          "start": "18:00",
-          "end": "19:00",
-          "subject": "Lb.engl.teh.",
-          "type": "sem",
-          "teacher": "Rosu A.",
-          "raw": "Lb.engl.teh.,sem,E120,Rosu A.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FIA • CEPA an 1 • grupa 1a",
-          "groupId": 302,
           "roomCode": "A038",
           "dayIndex": 3,
           "start": "08:00",
@@ -7418,6 +7431,19 @@
           "type": "lab",
           "teacher": "Stroe S.",
           "raw": "Info ap,lab,A038,Stroe S.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIA • CEPA an 1 • grupa 1a",
+          "groupId": 302,
+          "roomCode": "J006",
+          "dayIndex": 3,
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "Lb.engl.teh.",
+          "type": "sem",
+          "teacher": "Rosu A.",
+          "raw": "Lb.engl.teh.,sem,J6,Rosu A.",
           "source": "mobile_group"
         },
         {
@@ -7436,14 +7462,14 @@
         {
           "group": "FIA • CEPA an 1 • grupa 1a",
           "groupId": 302,
-          "roomCode": "J006",
+          "roomCode": "J007",
           "dayIndex": 3,
           "start": "16:00",
           "end": "17:00",
           "subject": "Ecologie",
           "type": "sem",
           "teacher": "Damian C.",
-          "raw": "Ecologie,sem,J6,Damian C.",
+          "raw": "Ecologie,sem,J7,Damian C.",
           "source": "mobile_group"
         },
         {
@@ -7586,14 +7612,14 @@
         {
           "group": "FIA • CEPA an 1 • grupa 1b",
           "groupId": 303,
-          "roomCode": "E120",
-          "dayIndex": 2,
-          "start": "18:00",
-          "end": "19:00",
+          "roomCode": "J006",
+          "dayIndex": 3,
+          "start": "10:00",
+          "end": "11:00",
           "subject": "Lb.engl.teh.",
           "type": "sem",
           "teacher": "Rosu A.",
-          "raw": "Lb.engl.teh.,sem,E120,Rosu A.",
+          "raw": "Lb.engl.teh.,sem,J6,Rosu A.",
           "source": "mobile_group"
         },
         {
@@ -7612,14 +7638,14 @@
         {
           "group": "FIA • CEPA an 1 • grupa 1b",
           "groupId": 303,
-          "roomCode": "J006",
+          "roomCode": "J007",
           "dayIndex": 3,
           "start": "16:00",
           "end": "17:00",
           "subject": "Ecologie",
           "type": "sem",
           "teacher": "Damian C.",
-          "raw": "Ecologie,sem,J6,Damian C.",
+          "raw": "Ecologie,sem,J7,Damian C.",
           "source": "mobile_group"
         },
         {
@@ -10506,6 +10532,19 @@
         {
           "group": "FIESC • AIA an 1 • 3211a",
           "groupId": 29,
+          "roomCode": "B310",
+          "dayIndex": 2,
+          "start": "16:00",
+          "end": "17:00",
+          "subject": "PsEd",
+          "type": "sem",
+          "teacher": "Feidaros L.",
+          "raw": "PsEd,sem,B310 Sala Curs,Feidaros L.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIESC • AIA an 1 • 3211a",
+          "groupId": 29,
           "roomCode": "C305",
           "dayIndex": 4,
           "start": "10:00",
@@ -10649,8 +10688,8 @@
           "end": "11:00",
           "subject": "SuP",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "SuP,lab,D205,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "SuP,lab,D205,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -10760,8 +10799,8 @@
           "end": "15:00",
           "subject": "SuP",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "SuP,lab,D205,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "SuP,lab,D205,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -11100,6 +11139,19 @@
         {
           "group": "FIESC • C an 1 • 3111a",
           "groupId": 20,
+          "roomCode": "B310",
+          "dayIndex": 1,
+          "start": "12:00",
+          "end": "13:00",
+          "subject": "PsEd",
+          "type": "sem",
+          "teacher": "Feidaros L.",
+          "raw": "PsEd,sem,B310 Sala Curs,Feidaros L.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIESC • C an 1 • 3111a",
+          "groupId": 20,
           "roomCode": "D011",
           "dayIndex": 2,
           "start": "10:00",
@@ -11211,6 +11263,19 @@
         {
           "group": "FIESC • C an 1 • 3111b",
           "groupId": 21,
+          "roomCode": "B310",
+          "dayIndex": 1,
+          "start": "12:00",
+          "end": "13:00",
+          "subject": "PsEd",
+          "type": "sem",
+          "teacher": "Feidaros L.",
+          "raw": "PsEd,sem,B310 Sala Curs,Feidaros L.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIESC • C an 1 • 3111b",
+          "groupId": 21,
           "roomCode": "D011",
           "dayIndex": 2,
           "start": "10:00",
@@ -11243,8 +11308,8 @@
           "end": "13:00",
           "subject": "InA",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "InA,lab,C207,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "InA,lab,C207,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -11432,8 +11497,8 @@
           "end": "15:00",
           "subject": "InA",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "InA,lab,C207,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "InA,lab,C207,Batinaş B.",
           "source": "mobile_group"
         }
       ]
@@ -11556,8 +11621,8 @@
           "end": "15:00",
           "subject": "InA",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "InA,lab,C207,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "InA,lab,C207,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -11611,8 +11676,8 @@
           "groupId": 33,
           "roomCode": "C101",
           "dayIndex": 3,
-          "start": "18:00",
-          "end": "19:00",
+          "start": "14:00",
+          "end": "15:00",
           "subject": "TS",
           "type": "lab",
           "teacher": "Buzduga C.",
@@ -11624,8 +11689,8 @@
           "groupId": 33,
           "roomCode": "C201",
           "dayIndex": 3,
-          "start": "18:00",
-          "end": "19:00",
+          "start": "16:00",
+          "end": "17:00",
           "subject": "DEEA1",
           "type": "lab",
           "teacher": "Fechet R.",
@@ -11637,8 +11702,8 @@
           "groupId": 33,
           "roomCode": "C201",
           "dayIndex": 4,
-          "start": "08:00",
-          "end": "09:00",
+          "start": "10:00",
+          "end": "11:00",
           "subject": "DEEA1",
           "type": "sem",
           "teacher": "Pohoata S.",
@@ -11680,8 +11745,8 @@
           "end": "13:00",
           "subject": "SOC",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "SOC,lab,D205,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "SOC,lab,D205,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -11733,19 +11798,6 @@
         {
           "group": "FIESC • C an 2 • 3121b",
           "groupId": 34,
-          "roomCode": "C201",
-          "dayIndex": 3,
-          "start": "16:00",
-          "end": "17:00",
-          "subject": "DEEA1",
-          "type": "lab",
-          "teacher": "Fechet R.",
-          "raw": "DEEA1,lab,C201,Fechet R.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FIESC • C an 2 • 3121b",
-          "groupId": 34,
           "roomCode": "C101",
           "dayIndex": 3,
           "start": "16:00",
@@ -11760,9 +11812,22 @@
           "group": "FIESC • C an 2 • 3121b",
           "groupId": 34,
           "roomCode": "C201",
+          "dayIndex": 3,
+          "start": "18:00",
+          "end": "19:00",
+          "subject": "DEEA1",
+          "type": "lab",
+          "teacher": "Fechet R.",
+          "raw": "DEEA1,lab,C201,Fechet R.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIESC • C an 2 • 3121b",
+          "groupId": 34,
+          "roomCode": "C201",
           "dayIndex": 4,
-          "start": "08:00",
-          "end": "09:00",
+          "start": "10:00",
+          "end": "11:00",
           "subject": "DEEA1",
           "type": "sem",
           "teacher": "Pohoata S.",
@@ -11778,8 +11843,8 @@
           "end": "13:00",
           "subject": "SOC",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "SOC,lab,D205,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "SOC,lab,D205,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -11844,19 +11909,6 @@
         {
           "group": "FIESC • C an 2 • 3122a",
           "groupId": 35,
-          "roomCode": "C101",
-          "dayIndex": 3,
-          "start": "16:00",
-          "end": "17:00",
-          "subject": "TS",
-          "type": "lab",
-          "teacher": "Buzduga C.",
-          "raw": "TS,lab,C101,Buzduga C.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FIESC • C an 2 • 3122a",
-          "groupId": 35,
           "roomCode": "C201",
           "dayIndex": 3,
           "start": "16:00",
@@ -11865,6 +11917,19 @@
           "type": "lab",
           "teacher": "Fechet R.",
           "raw": "DEEA1,lab,C201,Fechet R.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIESC • C an 2 • 3122a",
+          "groupId": 35,
+          "roomCode": "C101",
+          "dayIndex": 3,
+          "start": "16:00",
+          "end": "17:00",
+          "subject": "TS",
+          "type": "lab",
+          "teacher": "Buzduga C.",
+          "raw": "TS,lab,C101,Buzduga C.",
           "source": "mobile_group"
         },
         {
@@ -11915,8 +11980,8 @@
           "end": "15:00",
           "subject": "SOC",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "SOC,lab,D205,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "SOC,lab,D205,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -11961,8 +12026,8 @@
           "end": "17:00",
           "subject": "SOC",
           "type": "lab",
-          "teacher": "Batinas B.",
-          "raw": "SOC,lab,D205,Batinas B.",
+          "teacher": "Batinaş B.",
+          "raw": "SOC,lab,D205,Batinaş B.",
           "source": "mobile_group"
         },
         {
@@ -12405,8 +12470,8 @@
           "end": "17:00",
           "subject": "IP",
           "type": "lab",
-          "teacher": ".",
-          "raw": "IP,lab,C202, .",
+          "teacher": "Bordei V.",
+          "raw": "IP,lab,C202,Bordei V.",
           "source": "mobile_group"
         },
         {
@@ -12490,8 +12555,8 @@
           "end": "19:00",
           "subject": "IP",
           "type": "lab",
-          "teacher": ".",
-          "raw": "IP,lab,C202, .",
+          "teacher": "Balan V.",
+          "raw": "IP,lab,C202,Balan V.",
           "source": "mobile_group"
         },
         {
@@ -13478,6 +13543,19 @@
           "teacher": "Mutescu P.",
           "raw": "CCP,lab,C302,Mutescu P.",
           "source": "mobile_group"
+        },
+        {
+          "group": "FIESC • ETTI an 1 • 3311a",
+          "groupId": 31,
+          "roomCode": "A112",
+          "dayIndex": 5,
+          "start": "18:00",
+          "end": "19:00",
+          "subject": "PsEd",
+          "type": "sem",
+          "teacher": "Feidaros L.",
+          "raw": "PsEd,sem,A112,Feidaros L.",
+          "source": "mobile_group"
         }
       ]
     },
@@ -13575,6 +13653,19 @@
           "type": "lab",
           "teacher": "Mutescu P.",
           "raw": "CCP,lab,C302,Mutescu P.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIESC • ETTI an 1 • 3311b",
+          "groupId": 32,
+          "roomCode": "A112",
+          "dayIndex": 5,
+          "start": "18:00",
+          "end": "19:00",
+          "subject": "PsEd",
+          "type": "sem",
+          "teacher": "Feidaros L.",
+          "raw": "PsEd,sem,A112,Feidaros L.",
           "source": "mobile_group"
         }
       ]
@@ -15195,10 +15286,10 @@
           "dayIndex": 2,
           "start": "10:00",
           "end": "11:00",
-          "subject": "GC",
+          "subject": "IP",
           "type": "curs",
           "teacher": "Popoveniuc B.",
-          "raw": "GC,curs,E210,Popoveniuc B.",
+          "raw": "IP,curs,E210,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -15208,10 +15299,10 @@
           "dayIndex": 2,
           "start": "12:00",
           "end": "13:00",
-          "subject": "IP",
+          "subject": "GC",
           "type": "curs",
           "teacher": "Popoveniuc B.",
-          "raw": "IP,curs,E210,Popoveniuc B.",
+          "raw": "GC,curs,E210,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -15449,10 +15540,10 @@
           "dayIndex": 2,
           "start": "10:00",
           "end": "11:00",
-          "subject": "GC",
+          "subject": "IP",
           "type": "curs",
           "teacher": "Popoveniuc B.",
-          "raw": "GC,curs,E210,Popoveniuc B.",
+          "raw": "IP,curs,E210,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -15462,10 +15553,10 @@
           "dayIndex": 2,
           "start": "12:00",
           "end": "13:00",
-          "subject": "IP",
+          "subject": "GC",
           "type": "curs",
           "teacher": "Popoveniuc B.",
-          "raw": "IP,curs,E210,Popoveniuc B.",
+          "raw": "GC,curs,E210,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -15497,14 +15588,27 @@
         {
           "group": "FIG • Asist. Soc an 1 • grupa2",
           "groupId": 124,
-          "roomCode": "E216",
+          "roomCode": "A118",
           "dayIndex": 3,
-          "start": "16:00",
-          "end": "17:00",
+          "start": "12:00",
+          "end": "13:00",
+          "subject": "S.A.S.",
+          "type": "sem",
+          "teacher": "Orza L.",
+          "raw": "S.A.S.,sem,A118,Orza L.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIG • Asist. Soc an 1 • grupa2",
+          "groupId": 124,
+          "roomCode": "A118",
+          "dayIndex": 3,
+          "start": "14:00",
+          "end": "15:00",
           "subject": "BAS",
           "type": "sem",
           "teacher": "Orza L.",
-          "raw": "BAS,sem,E216,Orza L.",
+          "raw": "BAS,sem,A118,Orza L.",
           "source": "mobile_group"
         },
         {
@@ -15647,27 +15751,14 @@
         {
           "group": "FIG • Asist. Soc an 2 • grupa1",
           "groupId": 122,
-          "roomCode": "E129",
+          "roomCode": "E210",
           "dayIndex": 1,
-          "start": "18:00",
-          "end": "19:00",
+          "start": "14:00",
+          "end": "15:00",
           "subject": "D.U",
           "type": "curs",
           "teacher": "Marici M.",
-          "raw": "D.U,curs,E Amf E129,Marici M.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FIG • Asist. Soc an 2 • grupa1",
-          "groupId": 122,
-          "roomCode": "E210",
-          "dayIndex": 2,
-          "start": "10:00",
-          "end": "11:00",
-          "subject": "GC",
-          "type": "curs",
-          "teacher": "Popoveniuc B.",
-          "raw": "GC,curs,E210,Popoveniuc B.",
+          "raw": "D.U,curs,E210,Marici M.",
           "source": "mobile_group"
         },
         {
@@ -16729,19 +16820,6 @@
         {
           "group": "FIG • GT an 2 • grupa1a",
           "groupId": 243,
-          "roomCode": "E209",
-          "dayIndex": 2,
-          "start": "14:00",
-          "end": "15:00",
-          "subject": "G.T.",
-          "type": "sem",
-          "teacher": "Cheia G.",
-          "raw": "G.T.,sem,E209,Cheia G.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FIG • GT an 2 • grupa1a",
-          "groupId": 243,
           "roomCode": "A112",
           "dayIndex": 2,
           "start": "18:00",
@@ -17042,6 +17120,19 @@
         {
           "group": "FIG • Ist. an 1 • grupa1",
           "groupId": 106,
+          "roomCode": "E213",
+          "dayIndex": 1,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "LFr",
+          "type": "sem",
+          "teacher": "Epure V.",
+          "raw": "LFr,sem,E213,Epure V.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIG • Ist. an 1 • grupa1",
+          "groupId": 106,
           "roomCode": "E129",
           "dayIndex": 1,
           "start": "10:00",
@@ -17081,14 +17172,14 @@
         {
           "group": "FIG • Ist. an 1 • grupa1",
           "groupId": 106,
-          "roomCode": "ED001",
+          "roomCode": "E209",
           "dayIndex": 1,
           "start": "16:00",
           "end": "17:00",
           "subject": "AG",
           "type": "sem",
           "teacher": "Rusu I.",
-          "raw": "AG,sem,ED001,Rusu I.",
+          "raw": "AG,sem,E209,Rusu I.",
           "source": "mobile_group"
         },
         {
@@ -17324,8 +17415,8 @@
           "groupId": 107,
           "roomCode": "E210",
           "dayIndex": 2,
-          "start": "10:00",
-          "end": "11:00",
+          "start": "12:00",
+          "end": "13:00",
           "subject": "GC",
           "type": "curs",
           "teacher": "Popoveniuc B.",
@@ -17765,14 +17856,14 @@
         {
           "group": "FIG • MRICT an 1 • grupa1",
           "groupId": 228,
-          "roomCode": "E223",
+          "roomCode": "E132",
           "dayIndex": 2,
           "start": "16:00",
           "end": "17:00",
           "subject": "EIA",
           "type": "curs",
           "teacher": "Popoveniuc B.",
-          "raw": "EIA,curs,E223,Popoveniuc B.",
+          "raw": "EIA,curs,E132,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -17786,6 +17877,19 @@
           "type": "curs",
           "teacher": "Bujor L.",
           "raw": "CO,curs,Aula E,Bujor L.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIG • MRICT an 1 • grupa1",
+          "groupId": 228,
+          "roomCode": "E132",
+          "dayIndex": 2,
+          "start": "18:00",
+          "end": "19:00",
+          "subject": "EIA",
+          "type": "curs",
+          "teacher": "Popoveniuc B.",
+          "raw": "EIA,curs,E132,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -18169,6 +18273,19 @@
         {
           "group": "FIG • RISE an 1 • grupa1",
           "groupId": 112,
+          "roomCode": "E213",
+          "dayIndex": 1,
+          "start": "08:00",
+          "end": "09:00",
+          "subject": "LFr",
+          "type": "sem",
+          "teacher": "Epure V.",
+          "raw": "LFr,sem,E213,Epure V.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIG • RISE an 1 • grupa1",
+          "groupId": 112,
           "roomCode": "E129",
           "dayIndex": 1,
           "start": "10:00",
@@ -18196,19 +18313,6 @@
           "group": "FIG • RISE an 1 • grupa1",
           "groupId": 112,
           "roomCode": "E210",
-          "dayIndex": 1,
-          "start": "14:00",
-          "end": "15:00",
-          "subject": "I.S.P",
-          "type": "curs",
-          "teacher": "Cucu M.",
-          "raw": "I.S.P,curs,E210,Cucu M.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FIG • RISE an 1 • grupa1",
-          "groupId": 112,
-          "roomCode": "E210",
           "dayIndex": 2,
           "start": "08:00",
           "end": "09:00",
@@ -18229,6 +18333,19 @@
           "type": "sem",
           "teacher": "Rusu I.",
           "raw": "SSPLA,sem,A118,Rusu I.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIG • RISE an 1 • grupa1",
+          "groupId": 112,
+          "roomCode": "E210",
+          "dayIndex": 2,
+          "start": "12:00",
+          "end": "13:00",
+          "subject": "GC",
+          "type": "curs",
+          "teacher": "Popoveniuc B.",
+          "raw": "GC,curs,E210,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -18294,6 +18411,19 @@
           "type": "sem",
           "teacher": "Irimciuc M.",
           "raw": "ed,sem,A112,Irimciuc M.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FIG • RISE an 1 • grupa1",
+          "groupId": 112,
+          "roomCode": "E129",
+          "dayIndex": 4,
+          "start": "14:00",
+          "end": "15:00",
+          "subject": "I.S.P",
+          "type": "curs",
+          "teacher": "Cucu M.",
+          "raw": "I.S.P,curs,E Amf E129,Cucu M.",
           "source": "mobile_group"
         },
         {
@@ -18392,19 +18522,6 @@
           "type": "curs",
           "teacher": "Leonte M.",
           "raw": "DI,curs,E223,Leonte M.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FIG • RISE an 2 • grupa1",
-          "groupId": 113,
-          "roomCode": "E210",
-          "dayIndex": 2,
-          "start": "10:00",
-          "end": "11:00",
-          "subject": "GC",
-          "type": "curs",
-          "teacher": "Popoveniuc B.",
-          "raw": "GC,curs,E210,Popoveniuc B.",
           "source": "mobile_group"
         },
         {
@@ -20607,6 +20724,32 @@
         {
           "group": "FPSE • CSEE an 1 • grupa2",
           "groupId": 252,
+          "roomCode": "A112",
+          "dayIndex": 2,
+          "start": "18:00",
+          "end": "19:00",
+          "subject": "PPATA",
+          "type": "curs",
+          "teacher": "Turturean M.",
+          "raw": "PPATA,curs,A112,Turturean M.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FPSE • CSEE an 1 • grupa2",
+          "groupId": 252,
+          "roomCode": "A112",
+          "dayIndex": 3,
+          "start": "16:00",
+          "end": "17:00",
+          "subject": "PPATA",
+          "type": "sem",
+          "teacher": "Turturean M.",
+          "raw": "PPATA,sem,A112,Turturean M.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FPSE • CSEE an 1 • grupa2",
+          "groupId": 252,
           "roomCode": "P304",
           "dayIndex": 4,
           "start": "14:00",
@@ -20731,6 +20874,19 @@
         {
           "group": "FPSE • MIE an 1 • grupa1",
           "groupId": 250,
+          "roomCode": "A112",
+          "dayIndex": 2,
+          "start": "14:00",
+          "end": "15:00",
+          "subject": "PPATA",
+          "type": "sem",
+          "teacher": "Turturean M.",
+          "raw": "PPATA,sem,A112,Turturean M.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FPSE • MIE an 1 • grupa1",
+          "groupId": 250,
           "roomCode": "P204",
           "dayIndex": 2,
           "start": "16:00",
@@ -20757,14 +20913,14 @@
         {
           "group": "FPSE • MIE an 1 • grupa1",
           "groupId": 250,
-          "roomCode": "P303",
+          "roomCode": "A112",
           "dayIndex": 3,
-          "start": "14:00",
-          "end": "15:00",
-          "subject": "ECP",
-          "type": "sem",
-          "teacher": "Rusu P.",
-          "raw": "ECP,sem,P303,Rusu P.",
+          "start": "10:00",
+          "end": "11:00",
+          "subject": "PPATA",
+          "type": "curs",
+          "teacher": "Turturean M.",
+          "raw": "PPATA,curs,A112,Turturean M.",
           "source": "mobile_group"
         },
         {
@@ -20817,6 +20973,19 @@
           "type": "sem",
           "teacher": "Jeder D.",
           "raw": "EIAP,sem,P103,Jeder D.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FPSE • MIE an 1 • grupa1",
+          "groupId": 250,
+          "roomCode": "P304",
+          "dayIndex": 4,
+          "start": "18:00",
+          "end": "19:00",
+          "subject": "ECP",
+          "type": "sem",
+          "teacher": "Rusu P.",
+          "raw": "ECP,sem,P304,Rusu P.",
           "source": "mobile_group"
         },
         {
@@ -21566,6 +21735,19 @@
         {
           "group": "FPSE • PIPP an 3 • grupa1a",
           "groupId": 142,
+          "roomCode": "P204",
+          "dayIndex": 1,
+          "start": "14:00",
+          "end": "15:00",
+          "subject": "MCSE",
+          "type": "curs",
+          "teacher": "Rusu P.",
+          "raw": "MCSE,curs,P204,Rusu P.",
+          "source": "mobile_group"
+        },
+        {
+          "group": "FPSE • PIPP an 3 • grupa1a",
+          "groupId": 142,
           "roomCode": "P103",
           "dayIndex": 2,
           "start": "16:00",
@@ -21626,19 +21808,6 @@
           "type": "sem",
           "teacher": "Hrisca O.",
           "raw": "DET,sem,P103,Hrisca O.",
-          "source": "mobile_group"
-        },
-        {
-          "group": "FPSE • PIPP an 3 • grupa1a",
-          "groupId": 142,
-          "roomCode": "P104",
-          "dayIndex": 3,
-          "start": "12:00",
-          "end": "13:00",
-          "subject": "MCSE",
-          "type": "curs",
-          "teacher": "Rusu P.",
-          "raw": "MCSE,curs,P104,Rusu P.",
           "source": "mobile_group"
         },
         {
